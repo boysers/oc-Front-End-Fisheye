@@ -1,37 +1,119 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
-    <title>Fisheye - photographe </title>
-  </head>
-  <body>
-    <header>
-      <img src="assets/images/logo.png" class="logo" />
-    </header>
-    <main id="main">
-      <div class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-      </div>
-    </main>
-    <div id="contact_modal">
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/png" href="favicon.png" />
+		<link
+			href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
+			rel="stylesheet"
+		/>
+		<title>Fisheye - photographe</title>
+	</head>
+	<body>
+		<header>
+			<a href="/" aria-label="Fisheye Home page">
+				<img
+					src="images/logo.png"
+					class="logo"
+					alt="fisheye logo"
+				/>
+			</a>
+		</header>
+		<main id="main">
+			<div class="photograph-header">
+				<button
+					class="contact_button"
+					onclick="displayModal()"
+					aria-label="Contact Me"
+					data-js="open-modal"
+				>
+					Contactez-moi
+				</button>
+			</div>
+			<div class="media_section">
+				<!-- <div class="lightbox_controle">
+					<img
+						src="assets/icons/close-1.svg"
+						alt="Close contact form"
+						data-js="close-lightbox"
+						tabindex="0"
+						role="button"
+					/>
+					<img
+						src="assets/icons/expand_more-left.svg"
+						alt=""
+						class="arrow arrow__left"
+						tabindex="0"
+						role="button"
+					/>
+					<img
+						src="assets/icons/expand_more-right.svg"
+						alt=""
+						class="arrow arrow__right"
+						tabindex="0"
+						role="button"
+					/>
+				</div> -->
+			</div>
+		</main>
+		<div class="photographer-info"></div>
+		<div
+			id="contact_modal"
+			aria-hidden="true"
+			role="dialog"
+			aria-describedby="modalTitle"
+		>
 			<div class="modal">
 				<header>
-          <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
-        </header>
-				<form>
+					<h2 id="modalTitle">Contactez-moi</h2>
+					<img
+						src="icons/close.svg"
+						onclick="closeModal()"
+						alt="Close contact form"
+						data-js="close-modal"
+						tabindex="0"
+						role="button"
+					/>
+				</header>
+				<form onsubmit="handleForm(event)">
 					<div>
-						<label>Prénom</label>
-						<input />
+						<label for="firstname">Prénom</label>
+						<input
+							type="text"
+							id="firstname"
+							name="firstname"
+							required
+							autofocus
+						/>
 					</div>
-          <button class="contact_button">Envoyer</button>
+					<div>
+						<label for="lastname">Nom</label>
+						<input
+							type="text"
+							id="lastname"
+							name="lastname"
+							required
+						/>
+					</div>
+					<div>
+						<label for="email">Email</label>
+						<input type="email" id="email" name="email" required />
+					</div>
+					<div>
+						<label for="message">Votre message</label>
+						<textarea
+							id="message"
+							name="message"
+							rows="6"
+							spellcheck
+							required
+						></textarea>
+					</div>
+					<button class="contact_button">Envoyer</button>
 				</form>
 			</div>
 		</div>
-    <script src="/scripts/pages/photographer.js"></script>
-    <script src="/scripts/utils/contactForm.js"></script>
-  </body>
+		<script src="src/main.js" type="module"></script>
+		<script src="src/pages/photographer.js" type="module"></script>
+	</body>
 </html>
