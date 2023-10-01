@@ -1,8 +1,8 @@
 import { FetchAPIException } from "../utils/FetchAPIException";
 // eslint-disable-next-line no-unused-vars
-import { PhotographersService } from "../services/PhotographersService";
+import { PhotographersService } from "./PhotographersService";
 // eslint-disable-next-line no-unused-vars
-import { PhotographersView } from "../views/PhotographersView";
+import { PhotographersView } from "./PhotographersView";
 
 export class PhotographersController {
 	/**

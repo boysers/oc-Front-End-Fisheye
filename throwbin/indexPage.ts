@@ -1,7 +1,7 @@
-import { FisheyeAPI } from "../api/FisheyeAPI";
-import { PhotographersController } from "../controller/PhotographersController";
-import { PhotographersService } from "../services/PhotographersService";
-import { PhotographersView } from "../views/PhotographersView";
+import { FisheyeAPI } from "./FisheyeAPI";
+import { PhotographersController } from "./PhotographersController";
+import { PhotographersService } from "./PhotographersService";
+import { PhotographersView } from "./PhotographersView";
 
 function indexPage() {
 	const fisheyeAPI = new FisheyeAPI();

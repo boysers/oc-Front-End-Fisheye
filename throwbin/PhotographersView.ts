@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-import { PhotographerModel } from "../models/PhotographerModel";
-import { cardErrorTemplate } from "../templates/cardErrorTemplate";
+import { PhotographerModel } from "./PhotographerModel";
+import { cardErrorTemplate } from "./cardErrorTemplate";
 import { cardTemplate } from "../templates/cardTemplate";
 
 export class PhotographersView {

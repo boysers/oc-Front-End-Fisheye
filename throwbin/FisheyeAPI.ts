@@ -1,6 +1,6 @@
-import { IPhotographerAPI } from "../interfaces/PhotographerAPI";
+import { IPhotographerAPI } from "./PhotographerAPI";
 // eslint-disable-next-line no-unused-vars
-import { PhotographerModel } from "../models/PhotographerModel";
+import { PhotographerModel } from "./PhotographerModel";
 import { FetchAPIException } from "../utils/FetchAPIException";
 
 export class FisheyeAPI extends IPhotographerAPI {

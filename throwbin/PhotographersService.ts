@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-import { IPhotographerAPI } from "../interfaces/PhotographerAPI";
-import { PhotographerModel } from "../models/PhotographerModel";
+import { IPhotographerAPI } from "./PhotographerAPI";
+import { PhotographerModel } from "./PhotographerModel";
 
 export class PhotographersService {
 	/** @param {IPhotographerAPI} apiService */

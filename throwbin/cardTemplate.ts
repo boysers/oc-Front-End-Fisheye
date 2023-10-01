@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-import { PhotographerModel } from "../models/PhotographerModel";
-import { createElement } from "../utils/createElement";
+import { PhotographerModel } from "./PhotographerModel";
+import { createElement } from "../throwbin/createElement";
 
 /**
  * @param {PhotographerModel} props
