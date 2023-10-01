@@ -1,11 +1,9 @@
-import { IFetchDataApi, IMedia, IPhotographer } from "../interfaces";
+import { IFetchDataApi, IPhotographProfile } from "../interfaces";
 
-type IProfile = IPhotographer & { media: IMedia[] };
-
-export function searchPhotographerProfile(
+export function searchPhotographProfile(
 	data: IFetchDataApi,
 	id: number
-): IProfile | Error {
+): IPhotographProfile | Error {
 	const { photographers, media } = data;
 
 	const photographerProfile = photographers.find(

@@ -13,12 +13,23 @@ export interface IPhotographer {
 	portrait: string;
 }
 
-export interface IMedia {
+export interface IMediaBase {
 	id: number;
 	photographerId: number;
 	title: string;
-	image: string;
 	likes: number;
 	date: string;
 	price: number;
 }
+
+export interface IPhotoMedia extends IMediaBase {
+	image: string;
+}
+
+export interface IVideoMedia extends IMediaBase {
+	video: string;
+}
+
+export type IMedia = IPhotoMedia | IVideoMedia;
+
+export type IPhotographProfile = IPhotographer & { media: IMedia[] };
