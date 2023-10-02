@@ -7,11 +7,11 @@ export const mediaCardTemplate = ({
 	id,
 }: MediaCardProps) => {
 	return `
-        <article>
-            <img src="${src}" alt="${title}" tabindex="0" data-id="${id}"/>
+        <article data-id="${id}">
+            <img src="${src}" alt="${title}" tabindex="0"/>
             <div>
                 <h2>${title}</h2>
-                <p>${likes}<i aria-label="likes" class="fa-solid fa-heart" style="color: #901c1c"></i></p>
+                <p aria-label="likes" ><span>${likes}</span><i class="fa-solid fa-heart" style="color: #901c1c"></i></p>
             </div>
         </article>
     `;

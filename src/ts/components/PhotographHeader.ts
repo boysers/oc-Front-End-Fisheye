@@ -1,7 +1,7 @@
 import { IPhotographer } from "../interfaces";
 import { photographHeaderTemplate } from "../templates/photographHeaderTemplate";
 
-type PhotographHeaderProps = { photograph: IPhotographer, likes?: number };
+type PhotographHeaderProps = { photograph: IPhotographer; likes?: number };
 
 export const PhotographHeader = (
 	selector: string,
@@ -10,7 +10,6 @@ export const PhotographHeader = (
 	const photographHeaderElement = document.querySelector(selector);
 
 	const { name, city, portrait, tagline, country, price } = photograph;
-
 	photographHeaderElement.innerHTML = photographHeaderTemplate({
 		title: name,
 		src: `photographers/${portrait}`,
@@ -20,5 +19,22 @@ export const PhotographHeader = (
 		tjm: `${price}€/jour`,
 	});
 
-	return [photographHeaderElement] as const;
+	const likesElement = photographHeaderElement.querySelector(
+		".photographer-info > :nth-child(1) > span"
+	);
+	const onIncrementLikes = () => {
+		if (likesElement instanceof HTMLElement) {
+			likesElement.innerText = (likes = likes + 1).toString();
+		}
+	};
+	const onDecrementLikes = () => {
+		if (likesElement instanceof HTMLElement) {
+			likesElement.innerText = (likes = likes - 1).toString();
+		}
+	};
+
+	return [
+		photographHeaderElement,
+		{ onIncrementLikes, onDecrementLikes },
+	] as const;
 };
