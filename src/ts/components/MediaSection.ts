@@ -1,7 +1,9 @@
 import { IMedia, IPhotoMedia, IVideoMedia } from "../interfaces";
 import { mediaCardTemplate } from "../templates/mediaCardTemplate";
 
-type MediaSectionProps = { media: IMedia[] };
+type MediaSectionProps = {
+	media: IMedia[];
+};
 
 type MediaSectionFactoryProps = {
 	id: number;
@@ -10,19 +12,31 @@ type MediaSectionFactoryProps = {
 	src: string;
 };
 
+const createLikesMap = (media: IMedia[]) =>
+	Object.fromEntries(
+		media.map(({ id, likes }) => [
+			id,
+			{
+				likes,
+				hasLiked: false,
+			},
+		])
+	);
+
 export const MediaSection = (
 	selector: string,
 	{ media }: MediaSectionProps
 ) => {
-	const mediaSection = document.querySelector(selector);
+	const mediaSection = document.querySelector<HTMLElement>(selector);
 
 	const mediaTemplates = media.map((mediaItem) =>
 		mediaCardTemplate(createMediaSectionFactoryProps(mediaItem))
 	);
-
 	mediaSection.innerHTML = mediaTemplates.join("");
 
-	return [mediaSection] as const;
+	const likesMap = createLikesMap(media);
+
+	return [mediaSection, { likesMap }] as const;
 };
 
 function createMediaSectionFactoryProps(

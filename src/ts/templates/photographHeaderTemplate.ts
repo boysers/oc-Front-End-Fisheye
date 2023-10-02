@@ -24,7 +24,7 @@ export const photographHeaderTemplate = ({
         <img src="${src}" alt="${title}">
         <button class="contact_button" aria-label="Contact Me">Contactez-moi</button>
         <div class="photographer-info">
-            <p>${likes}<i aria-label="likes" class="fa-solid fa-heart" style="color: #000000;"></i></p>
+            <p><span>${likes}</span><i aria-label="likes" class="fa-solid fa-heart" style="color: #000000;"></i></p>
             <p>${tjm}</p>
         </div>
         
