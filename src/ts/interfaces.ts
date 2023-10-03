@@ -33,3 +33,10 @@ export interface IVideoMedia extends IMediaBase {
 export type IMedia = IPhotoMedia | IVideoMedia;
 
 export type IPhotographProfile = IPhotographer & { media: IMedia[] };
+
+export type IMediaMap = Record<
+	string,
+	Omit<IMedia, "id"> & {
+		hasLiked: boolean;
+	}
+>;

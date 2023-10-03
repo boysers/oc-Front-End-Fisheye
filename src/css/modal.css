@@ -1,0 +1,108 @@
+body.open-modal {
+	overflow: hidden;
+}
+
+#modal {
+	position: fixed;
+	display: none;
+	z-index: 1000;
+	background-color: #fff;
+	width: 100vw;
+	height: 100%;
+	top: 0;
+	overflow: auto;
+
+	background: #fff;
+}
+
+#modal.open {
+	display: block;
+}
+
+#contact-modal {
+	border-radius: 5px;
+	background-color: #db8876;
+	width: 50%;
+	/* display: flex; */
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	padding: 35px;
+	margin: auto;
+	margin-top: 60px;
+	margin-bottom: 60px;
+
+	display: none;
+}
+
+#contact-modal.open {
+	display: flex;
+}
+
+#contact-modal header {
+	justify-content: space-between;
+	align-items: baseline;
+	width: 100%;
+	height: auto;
+}
+
+#contact-modal header img {
+	cursor: pointer;
+}
+
+#contact-modal header h2 {
+	font-size: 64px;
+	font-weight: normal;
+	margin: 0;
+}
+
+form {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-top: 30px;
+}
+
+form label {
+	color: #312e2e;
+	font-size: 36px;
+}
+
+form div {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	align-items: self-start;
+	margin-bottom: 26px;
+}
+
+form input {
+	width: 100%;
+	height: 68px;
+	border: none;
+	border-radius: 5px;
+	font-size: 1.5em;
+}
+
+form textarea {
+	resize: none;
+	width: 100%;
+	border: none;
+	border-radius: 5px;
+	font-size: 24px;
+	font-family: "DM Sans", sans-serif;
+}
+
+.contact_button {
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	padding: 11px;
+	width: 170px;
+	height: 70px;
+	border: none;
+	background-color: #901c1c;
+	border-radius: 5px;
+	cursor: pointer;
+}

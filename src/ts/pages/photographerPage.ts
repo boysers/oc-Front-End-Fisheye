@@ -2,11 +2,16 @@ import { fetchPhotographersJSON } from "../api/fisheyeApi";
 import { MediaSection } from "../components/MediaSection";
 import { PhotographHeader } from "../components/PhotographHeader";
 import { searchPhotographProfile } from "../utils/searchPhotographerProfile";
-import { setupMediaLikesEventListeners } from "../utils/setupMediaLikesEventListeners";
+import { setupMediaEventListeners } from "../utils/setupMediaEventListeners";
+import { handleLikesClick } from "../utils/handleLikesClick";
+import { calculateTotalLikes } from "../utils/calculateTotalLikes";
+import { getPhotographerIdFromURL } from "../utils/getPhotographerIdFormURL";
+import { createMediaMap } from "../utils/createMediaMap";
+import { Modal } from "../components/Modal";
+import { FormModal } from "../components/FormModal";
 
 async function photographerPage() {
-	const idParam = new URL(location.href).searchParams.get("id");
-	const id = parseInt(idParam, 10);
+	const id = getPhotographerIdFromURL();
 	if (!id) {
 		console.error("Invalid photographer ID");
 		return;
@@ -25,24 +30,29 @@ async function photographerPage() {
 	}
 
 	const { media, ...photograph } = profile;
-	const totalLikes = media.reduce(
-		(acc, mediaItem) => acc + mediaItem.likes,
-		0
+	const totalLikes = calculateTotalLikes(media);
+	const mediaMap = createMediaMap(media);
+
+	const [
+		_photographHeaderElement,
+		{ onIncrementLikes, onDecrementLikes, contactMeBtn },
+	] = PhotographHeader(".photograph-header", {
+		photograph,
+		likes: totalLikes,
+	});
+
+	const [mediaSectionElement] = MediaSection(".media_section", { media });
+
+	setupMediaEventListeners(mediaSectionElement, (e) => {
+		handleLikesClick(e, { mediaMap, onIncrementLikes, onDecrementLikes });
+	});
+
+	const [modalElement, { toggleModalDisplay }] = Modal("#modal");
+
+	FormModal(
+		{ modalElement, openBtnElement: contactMeBtn },
+		{ title: profile.name, toggleModalDisplay }
 	);
-
-	const [_photographHeaderElement, { onIncrementLikes, onDecrementLikes }] =
-		PhotographHeader(".photograph-header", {
-			photograph,
-			likes: totalLikes,
-		});
-
-	const [mediaSectionElement, { likesMap }] = MediaSection(".media_section", {
-		media,
-	});
-	setupMediaLikesEventListeners(mediaSectionElement, likesMap, {
-		onIncrementLikes,
-		onDecrementLikes,
-	});
 }
 
 photographerPage();

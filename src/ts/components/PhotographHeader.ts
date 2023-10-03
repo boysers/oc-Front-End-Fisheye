@@ -33,8 +33,12 @@ export const PhotographHeader = (
 		}
 	};
 
+	const contactMeBtn = photographHeaderElement.querySelector<HTMLElement>(
+		"[data-js='open-modal'"
+	);
+
 	return [
 		photographHeaderElement,
-		{ onIncrementLikes, onDecrementLikes },
+		{ onIncrementLikes, onDecrementLikes, contactMeBtn },
 	] as const;
 };

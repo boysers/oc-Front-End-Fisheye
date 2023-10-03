@@ -7,7 +7,7 @@ export const mediaCardTemplate = ({
 	id,
 }: MediaCardProps) => {
 	return `
-        <article data-id="${id}">
+        <article data-id="${id}" class="media-item">
             <img src="${src}" alt="${title}" tabindex="0"/>
             <div>
                 <h2>${title}</h2>
