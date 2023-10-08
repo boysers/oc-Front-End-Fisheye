@@ -1,4 +1,4 @@
-import { IMedia, IPhotoMedia, IVideoMedia } from "../interfaces";
+import { IMedia, IMediaMap, IPhotoMedia, IVideoMedia } from "../interfaces";
 import { mediaCardTemplate } from "../templates/mediaCardTemplate";
 
 type MediaSectionFactoryProps = {
@@ -10,27 +10,43 @@ type MediaSectionFactoryProps = {
 
 type MediaSectionProps = {
 	media: IMedia[];
+	likedMediaMap: IMediaMap;
+	onClick?: (e: Event) => void;
 };
 
 export const MediaSection = (
 	selector: string,
-	{ media }: MediaSectionProps
+	{ media, likedMediaMap, onClick }: MediaSectionProps = {
+		media: [],
+		likedMediaMap: {},
+	}
 ) => {
 	const mediaSectionElement = document.querySelector<HTMLElement>(selector);
 
-	const mediaTemplates = media.map((mediaItem) => {
-		return mediaCardTemplate(
-			createMediaSectionFactoryProps(mediaItem as IMedia)
-		);
-	});
-	mediaSectionElement.innerHTML = mediaTemplates.join("");
+	const updateMediaSection = () => {
+		const mediaTemplates = media.map((mediaItem) => {
+			return mediaCardTemplate(
+				createMediaSectionFactoryProps({
+					...mediaItem,
+					likes: likedMediaMap[mediaItem.id].likes,
+				} as IMedia)
+			);
+		});
 
-	return [mediaSectionElement] as const;
+		mediaSectionElement.innerHTML = mediaTemplates.join("");
+	};
+	updateMediaSection();
+
+	if (onClick instanceof Function) {
+		mediaSectionElement.addEventListener("click", (e) => {
+			onClick(e);
+		});
+	}
+
+	return [mediaSectionElement, { updateMediaSection }] as const;
 };
 
-function createMediaSectionFactoryProps(
-	media: IMedia
-): MediaSectionFactoryProps {
+function createMediaSectionFactoryProps(media: IMedia) {
 	if ("video" in media) {
 		return createVideoMediaFactoryProps(media);
 	}
@@ -58,11 +74,12 @@ function createVideoMediaFactoryProps({
 	id,
 	likes,
 	title,
-}: IVideoMedia): MediaSectionFactoryProps {
+}: IVideoMedia) {
 	return {
 		title,
 		src: `media/${photographerId}/${video}_poster.png`,
 		likes,
 		id,
+		video: `media/${photographerId}/${video}`,
 	};
 }

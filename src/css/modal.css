@@ -106,3 +106,76 @@ form textarea {
 	border-radius: 5px;
 	cursor: pointer;
 }
+
+#lightbox-modal {
+	/* max-width: 1024px; */
+	max-width: 1280px;
+	margin: auto;
+}
+
+#lightbox-modal {
+	display: none;
+}
+
+#lightbox-modal.open {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	height: 100vh;
+}
+
+#lightbox-modal > img {
+	position: absolute;
+	cursor: pointer;
+}
+
+#lightbox-modal > img:nth-child(1) {
+	top: 50px;
+	right: 20px;
+}
+
+#lightbox-modal > img:nth-child(2) {
+	left: 0;
+}
+
+#lightbox-modal > img:nth-child(3) {
+	right: 0;
+}
+
+#lightbox-modal article {
+	display: none;
+}
+
+#lightbox-modal article p[aria-label="likes"] {
+	display: none;
+}
+
+#lightbox-modal .media_section {
+	display: flex;
+	width: 90%;
+	height: 90%;
+}
+
+#lightbox-modal .media_section article.open {
+	display: flex;
+}
+
+#lightbox-modal .media_section article {
+	width: 100%;
+}
+
+#lightbox-modal .media_section img {
+	aspect-ratio: unset;
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
+
+#lightbox-modal .media_section video {
+	display: block;
+}
+
+#lightbox-modal .media_section .media-item:has(video) img {
+	display: none;
+}

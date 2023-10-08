@@ -6,12 +6,12 @@ interface CallbackLikes {
 }
 
 type handleLikesProps = CallbackLikes & {
-	mediaMap: IMediaMap;
+	likedMediaMap: IMediaMap;
 };
 
 export const handleLikesClick = (
 	e: Event,
-	{ onIncrementLikes, onDecrementLikes, mediaMap }: handleLikesProps
+	{ onIncrementLikes, onDecrementLikes, likedMediaMap }: handleLikesProps
 ) => {
 	if (!(e.target instanceof HTMLElement)) return;
 	const element = e.target;
@@ -25,16 +25,16 @@ export const handleLikesClick = (
 	const id = mediaItem.getAttribute("data-id");
 	if (!id) return;
 
-	if (mediaMap[id].hasLiked) {
-		mediaMap[id].hasLiked = false;
-		mediaMap[id].likes -= 1;
-		updateLikesBtn(likesBtn, mediaMap[id].likes);
+	if (likedMediaMap[id].hasLiked) {
+		likedMediaMap[id].hasLiked = false;
+		likedMediaMap[id].likes -= 1;
+		updateLikesBtn(likesBtn, likedMediaMap[id].likes);
 		callLikesCallback(onDecrementLikes);
 		return;
 	}
-	mediaMap[id].hasLiked = true;
-	mediaMap[id].likes += 1;
-	updateLikesBtn(likesBtn, mediaMap[id].likes);
+	likedMediaMap[id].hasLiked = true;
+	likedMediaMap[id].likes += 1;
+	updateLikesBtn(likesBtn, likedMediaMap[id].likes);
 	callLikesCallback(onIncrementLikes);
 };
 

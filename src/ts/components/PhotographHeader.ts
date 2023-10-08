@@ -1,11 +1,11 @@
 import { IPhotographer } from "../interfaces";
 import { photographHeaderTemplate } from "../templates/photographHeaderTemplate";
 
-type PhotographHeaderProps = { photograph: IPhotographer; likes?: number };
+type PhotographHeaderProps = { photograph: IPhotographer; totalLikes?: number };
 
 export const PhotographHeader = (
 	selector: string,
-	{ photograph, likes = 0 }: PhotographHeaderProps
+	{ photograph, totalLikes: likes = 0 }: PhotographHeaderProps
 ) => {
 	const photographHeaderElement = document.querySelector(selector);
 

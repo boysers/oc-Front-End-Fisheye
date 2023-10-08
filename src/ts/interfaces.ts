@@ -36,7 +36,8 @@ export type IPhotographProfile = IPhotographer & { media: IMedia[] };
 
 export type IMediaMap = Record<
 	string,
-	Omit<IMedia, "id"> & {
+	{
+		likes: number;
 		hasLiked: boolean;
 	}
 >;

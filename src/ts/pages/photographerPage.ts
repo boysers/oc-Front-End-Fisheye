@@ -2,17 +2,20 @@ import { fetchPhotographersJSON } from "../api/fisheyeApi";
 import { MediaSection } from "../components/MediaSection";
 import { PhotographHeader } from "../components/PhotographHeader";
 import { searchPhotographProfile } from "../utils/searchPhotographerProfile";
-import { setupMediaEventListeners } from "../utils/setupMediaEventListeners";
 import { handleLikesClick } from "../utils/handleLikesClick";
 import { calculateTotalLikes } from "../utils/calculateTotalLikes";
 import { getPhotographerIdFromURL } from "../utils/getPhotographerIdFormURL";
-import { createMediaMap } from "../utils/createMediaMap";
-import { Modal } from "../components/Modal";
-import { FormModal } from "../components/FormModal";
+import { Modal } from "../components/Modal/Modal";
+import { FormModal } from "../components/Modal/FormModal";
+import { Lightbox } from "../components/Modal/Lightbox";
+import { handleOpenLightbox } from "../utils/handleOpenLightbox";
+import { createLikesMediaMap } from "../utils/createLikesMediaMap";
+import { SortByComponent } from "../components/SortByComponent";
+import { sortMediaByOption } from "../utils/sortMediaByOption";
 
 async function photographerPage() {
-	const id = getPhotographerIdFromURL();
-	if (!id) {
+	const photographerId = getPhotographerIdFromURL();
+	if (!photographerId) {
 		console.error("Invalid photographer ID");
 		return;
 	}
@@ -23,7 +26,7 @@ async function photographerPage() {
 		return;
 	}
 
-	const profile = searchPhotographProfile(data, id);
+	const profile = searchPhotographProfile(data, photographerId);
 	if (profile instanceof Error) {
 		console.error("Error searching photographer profile:", profile.message);
 		return;
@@ -31,28 +34,54 @@ async function photographerPage() {
 
 	const { media, ...photograph } = profile;
 	const totalLikes = calculateTotalLikes(media);
-	const mediaMap = createMediaMap(media);
+	const likedMediaMap = createLikesMediaMap(media);
 
-	const [
-		_photographHeaderElement,
-		{ onIncrementLikes, onDecrementLikes, contactMeBtn },
-	] = PhotographHeader(".photograph-header", {
-		photograph,
-		likes: totalLikes,
-	});
+	const [, { onIncrementLikes, onDecrementLikes, contactMeBtn }] =
+		PhotographHeader(".photograph-header", { photograph, totalLikes });
 
-	const [mediaSectionElement] = MediaSection(".media_section", { media });
+	const [mediaSectionElement, { updateMediaSection }] = MediaSection(
+		".media_section",
+		{
+			media,
+			likedMediaMap,
+			onClick(e) {
+				handleLikesClick(e, {
+					likedMediaMap,
+					onIncrementLikes,
+					onDecrementLikes,
+				});
+				handleOpenLightbox(e, {
+					media,
+					onMediaItemDisplay,
+					toggleModalDisplay,
+				});
+			},
+		}
+	);
 
-	setupMediaEventListeners(mediaSectionElement, (e) => {
-		handleLikesClick(e, { mediaMap, onIncrementLikes, onDecrementLikes });
+	SortByComponent("#sortby", {
+		onChange(_e, sortSelect) {
+			sortMediaByOption(media, sortSelect);
+			updateMediaSection();
+			updateLightbox();
+		},
 	});
 
 	const [modalElement, { toggleModalDisplay }] = Modal("#modal");
 
-	FormModal(
-		{ modalElement, openBtnElement: contactMeBtn },
-		{ title: profile.name, toggleModalDisplay }
+	const [, { onMediaItemDisplay, updateLightbox }] = Lightbox(
+		"#lightbox-modal",
+		{
+			mediaSectionElement,
+		}
 	);
+
+	FormModal("#contact-modal", {
+		title: profile.name,
+		toggleModalDisplay,
+		openBtnElement: contactMeBtn,
+		modalElement,
+	});
 }
 
 photographerPage();

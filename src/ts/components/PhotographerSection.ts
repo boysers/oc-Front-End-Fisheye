@@ -7,7 +7,7 @@ export const PhotographerSection = (
 	selector: string,
 	{ photographers }: PhotographerSectionProps
 ) => {
-	const photographerSections = document.querySelector(selector);
+	const photographerSectionElement = document.querySelector(selector);
 
 	const photographerTemplates = photographers.map(
 		({ city, country, id, name, portrait, price, tagline }) =>
@@ -20,8 +20,7 @@ export const PhotographerSection = (
 				tagline,
 			})
 	);
+	photographerSectionElement.innerHTML += photographerTemplates.join("");
 
-	photographerSections.innerHTML = photographerTemplates.join("");
-
-	return [photographerSections] as const;
+	return [photographerSectionElement] as const;
 };
