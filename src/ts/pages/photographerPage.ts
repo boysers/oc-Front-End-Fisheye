@@ -2,12 +2,20 @@ import { fetchPhotographersJSON } from "../api/fisheyeApi";
 import { MediaSection } from "../components/MediaSection";
 import { PhotographHeader } from "../components/PhotographHeader";
 import { searchPhotographProfile } from "../utils/searchPhotographerProfile";
-import { setupMediaLikesEventListeners } from "../utils/setupMediaLikesEventListeners";
+import { handleLikesClick } from "../utils/handleLikesClick";
+import { calculateTotalLikes } from "../utils/calculateTotalLikes";
+import { getPhotographerIdFromURL } from "../utils/getPhotographerIdFormURL";
+import { Modal } from "../components/Modal/Modal";
+import { FormModal } from "../components/Modal/FormModal";
+import { Lightbox } from "../components/Modal/Lightbox";
+import { handleOpenLightbox } from "../utils/handleOpenLightbox";
+import { createLikesMediaMap } from "../utils/createLikesMediaMap";
+import { SortByComponent } from "../components/SortByComponent";
+import { sortMediaByOption } from "../utils/sortMediaByOption";
 
 async function photographerPage() {
-	const idParam = new URL(location.href).searchParams.get("id");
-	const id = parseInt(idParam, 10);
-	if (!id) {
+	const photographerId = getPhotographerIdFromURL();
+	if (!photographerId) {
 		console.error("Invalid photographer ID");
 		return;
 	}
@@ -18,30 +26,61 @@ async function photographerPage() {
 		return;
 	}
 
-	const profile = searchPhotographProfile(data, id);
+	const profile = searchPhotographProfile(data, photographerId);
 	if (profile instanceof Error) {
 		console.error("Error searching photographer profile:", profile.message);
 		return;
 	}
 
 	const { media, ...photograph } = profile;
-	const totalLikes = media.reduce(
-		(acc, mediaItem) => acc + mediaItem.likes,
-		0
+	const totalLikes = calculateTotalLikes(media);
+	const likedMediaMap = createLikesMediaMap(media);
+
+	const [, { onIncrementLikes, onDecrementLikes, contactMeBtn }] =
+		PhotographHeader(".photograph-header", { photograph, totalLikes });
+
+	const [mediaSectionElement, { updateMediaSection }] = MediaSection(
+		".media_section",
+		{
+			media,
+			likedMediaMap,
+			onClick(e) {
+				handleLikesClick(e, {
+					likedMediaMap,
+					onIncrementLikes,
+					onDecrementLikes,
+				});
+				handleOpenLightbox(e, {
+					media,
+					onMediaItemDisplay,
+					toggleModalDisplay,
+				});
+			},
+		}
 	);
 
-	const [_photographHeaderElement, { onIncrementLikes, onDecrementLikes }] =
-		PhotographHeader(".photograph-header", {
-			photograph,
-			likes: totalLikes,
-		});
-
-	const [mediaSectionElement, { likesMap }] = MediaSection(".media_section", {
-		media,
+	SortByComponent("#sortby", {
+		onChange(_e, sortSelect) {
+			sortMediaByOption(media, sortSelect);
+			updateMediaSection();
+			updateLightbox();
+		},
 	});
-	setupMediaLikesEventListeners(mediaSectionElement, likesMap, {
-		onIncrementLikes,
-		onDecrementLikes,
+
+	const [modalElement, { toggleModalDisplay }] = Modal("#modal");
+
+	const [, { onMediaItemDisplay, updateLightbox }] = Lightbox(
+		"#lightbox-modal",
+		{
+			mediaSectionElement,
+		}
+	);
+
+	FormModal("#contact-modal", {
+		title: profile.name,
+		toggleModalDisplay,
+		openBtnElement: contactMeBtn,
+		modalElement,
 	});
 }
 
