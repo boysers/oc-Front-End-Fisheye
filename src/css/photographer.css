@@ -60,6 +60,7 @@
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 36px;
+	z-index: 50;
 }
 
 .photographer-info p {
@@ -136,15 +137,17 @@
 	display: flex;
 	align-items: center;
 	font-size: 1.3em;
-	cursor: pointer;
+
+	position: relative;
 }
 
-.media_section div p * {
+/* .media_section div p * {
 	pointer-events: none;
-}
+} */
 
 .media_section div p i {
 	margin-left: 4px;
+	cursor: pointer;
 }
 
 /* ------------ */

@@ -1,7 +1,7 @@
 
 export const sortbyTemplate = () => {
 	return `
-        <p class="listbox1label" role="label">Trier par</p>
+        <p class="listbox1label" role="label" id="listbox1label">Trier par</p>
         <div
             role="listbox"
             tabindex="0"

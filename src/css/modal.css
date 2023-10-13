@@ -2,7 +2,7 @@ body.open-modal {
 	overflow: hidden;
 }
 
-#modal {
+.modal {
 	position: fixed;
 	display: none;
 	z-index: 1000;
@@ -15,11 +15,16 @@ body.open-modal {
 	background: #fff;
 }
 
-#modal.open {
+.modal.open {
 	display: block;
 }
 
-#contact-modal {
+#formModal {
+	display: none;
+	background-color: rgba(196, 196, 196, 0.4);
+}
+
+#formModal > div {
 	border-radius: 5px;
 	background-color: #db8876;
 	width: 50%;
@@ -32,25 +37,25 @@ body.open-modal {
 	margin-top: 60px;
 	margin-bottom: 60px;
 
-	display: none;
-}
-
-#contact-modal.open {
 	display: flex;
 }
 
-#contact-modal header {
+#formModal.open {
+	display: block;
+}
+
+#formModal header {
 	justify-content: space-between;
 	align-items: baseline;
 	width: 100%;
 	height: auto;
 }
 
-#contact-modal header img {
+#formModal header img {
 	cursor: pointer;
 }
 
-#contact-modal header h2 {
+#formModal header h2 {
 	font-size: 64px;
 	font-weight: normal;
 	margin: 0;
@@ -83,6 +88,15 @@ form input {
 	border: none;
 	border-radius: 5px;
 	font-size: 1.5em;
+}
+
+form .field-error {
+	display: none;
+	color: #e54858;
+}
+
+form .field-error.open {
+	display: block;
 }
 
 form textarea {

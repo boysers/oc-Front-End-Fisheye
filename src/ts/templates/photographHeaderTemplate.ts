@@ -22,10 +22,10 @@ export const photographHeaderTemplate = ({
             <p>${tagline}</p>
         </div>
         <img src="${src}" alt="${title}">
-        <button data-js="open-modal" class="contact_button" aria-label="Contact Me">Contactez-moi</button>
+        <button data-js="open-modal" class="contact_button" aria-label="Contact Me" type="button">Contactez-moi</button>
         <div class="photographer-info">
-            <p><span>${likes}</span><i aria-label="likes" class="fa-solid fa-heart" style="color: #000000;"></i></p>
-            <p>${tjm}</p>
+            <p aria-label="Nombre de likes"><span>${likes}</span><i aria-label="likes" role="img" class="fa-solid fa-heart" style="color: #000000;"></i></p>
+            <p aria-label="Tarif journalier moyen">${tjm}</p>
         </div>
         
     `;

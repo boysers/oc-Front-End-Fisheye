@@ -6,7 +6,8 @@ export const SortByComponent = (selector: string, { onChange }: Props = {}) => {
 	const sortbyElement = document.querySelector(selector);
 	sortbyElement.innerHTML += sortbyTemplate();
 
-	const listbox = sortbyElement.querySelector("#listbox1");
+	const label = sortbyElement.querySelector("#listbox1label");
+	const listbox = sortbyElement.querySelector<HTMLElement>("#listbox1");
 	const options = listbox.querySelectorAll<HTMLElement>(".listbox-option");
 
 	let currentOption = "popularity";
@@ -62,6 +63,8 @@ export const SortByComponent = (selector: string, { onChange }: Props = {}) => {
 			e.preventDefault();
 		}
 	};
+
+	label.addEventListener("click", () => listbox.focus());
 
 	listbox.addEventListener("click", (e) => {
 		if (e.target instanceof HTMLElement) {
