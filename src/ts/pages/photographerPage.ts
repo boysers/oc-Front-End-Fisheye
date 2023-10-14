@@ -9,12 +9,9 @@ import { sortMediaByOption } from "../utils/sortMediaByOption";
 import { createLikesMediaMap } from "../utils/createLikesMediaMap";
 import { ContactFormModal } from "../components/ContactFormModal";
 import { setDocumentTitle } from "../utils/setDocumentTitle";
-// import { Modal } from "../components/Modal/Modal";
-// import { FormModal } from "../components/Modal/FormModal";
-// import { Lightbox } from "../components/Modal/Lightbox";
-// import { handleOpenLightbox } from "../utils/handleOpenLightbox";
-// import { SortByComponent } from "../components/SortByComponent";
-// import { modalTemplate } from "../templates/modalTemplate";
+import { SortByComponent } from "../components/SortByComponent";
+import { LightboxModal } from "../components/LightboxModal";
+import { handleOpenLightbox } from "../utils/handleOpenLightbox";
 
 async function photographerPage() {
 	const photographerId = getPhotographerIdFromURL();
@@ -51,39 +48,37 @@ async function photographerPage() {
 		openModalBtnElement: contactMeBtn,
 	});
 
-	MediaSection(".media_section", {
-		media,
-		likedMediaMap,
-		onClick(e) {
-			handleLikesClick(e, {
-				likedMediaMap,
-				onIncrementLikes,
-				onDecrementLikes,
-			});
-			// handleOpenLightbox(e, {
-			// 	media,
-			// 	onMediaItemDisplay,
-			// 	toggleModalDisplay,
-			// });
+	const [mediaSectionElement,{ updateMediaSection }] = MediaSection(
+		".media_section",
+		{
+			media,
+			likedMediaMap,
+			onClick(e) {
+				handleLikesClick(e, {
+					likedMediaMap,
+					onIncrementLikes,
+					onDecrementLikes,
+				});
+				handleOpenLightbox(e, {
+					media,
+					onMediaItemDisplay,
+				});
+			},
+		}
+	);
+
+	SortByComponent("#sortby", {
+		onChange(_e, sortSelect) {
+			sortMediaByOption(media, sortSelect);
+			updateMediaSection();
+			updateLightbox();
 		},
 	});
 
-	// SortByComponent("#sortby", {
-	// 	onChange(_e, sortSelect) {
-	// 		sortMediaByOption(media, sortSelect);
-	// 		updateMediaSection();
-	// 		updateLightbox();
-	// 	},
-	// });
-
-	// const [modalElement, { toggleModalDisplay }] = Modal("#modal");
-
-	// const [, { onMediaItemDisplay, updateLightbox }] = Lightbox(
-	// 	"#lightbox-modal",
-	// 	{
-	// 		mediaSectionElement,
-	// 	}
-	// );
+	const [, { updateLightbox, onMediaItemDisplay }] = LightboxModal(
+		"#lightboxModal",
+		{ media, mediaSectionElement }
+	);
 }
 
 photographerPage();

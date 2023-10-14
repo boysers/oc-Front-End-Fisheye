@@ -102,7 +102,7 @@
 	display: block;
 	object-fit: cover;
 	border-radius: 5px;
-	aspect-ratio: 1.1 / 1;
+	aspect-ratio: 1 / 1;
 	cursor: pointer;
 }
 
@@ -114,11 +114,35 @@
 	border-radius: 5px;
 }
 
+.media-item {
+	position: relative;
+}
+
 .media_section .media-item video {
 	display: none;
 }
 
-.media_section div {
+.media_section .media-item .video {
+	position: relative;
+}
+
+.media_section .media-item .video i.fa-play {
+	font-size: 3.5vw;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	pointer-events: none;
+	background-color: hsla(0, 67%, 0%, 0.50);
+	width: 30%;
+	height: 30%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+}
+
+.media_section .media-item div {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -126,12 +150,12 @@
 	padding-top: 10px;
 }
 
-.media_section div h2 {
+.media_section .media-item div h2 {
 	margin: 0;
 	font-weight: 400;
 }
 
-.media_section div p {
+.media_section .media-item div p {
 	margin: 0;
 	font-weight: 500;
 	display: flex;
@@ -140,10 +164,6 @@
 
 	position: relative;
 }
-
-/* .media_section div p * {
-	pointer-events: none;
-} */
 
 .media_section div p i {
 	margin-left: 4px;
@@ -158,46 +178,32 @@
 	align-items: center;
 }
 
-#sortby .listbox1label {
-	display: block;
-	font-weight: 700;
+#sortby > :nth-child(1) {
 	margin-right: 25px;
-	font-size: 1.15em;
+	font-weight: 700;
+	font-size: 1.15rem;
 }
 
-#listbox1 {
+select {
+	font-size: 1.15rem;
 	background-color: #901c1c;
 	color: #fff;
-	font-size: 1.15rem;
-	border-radius: 5px;
-}
-
-#sortby .listbox-option {
-	cursor: pointer;
-	position: relative;
+	border: none;
 	padding: 14px 20px;
-}
-
-#sortby .listbox-option.selected {
+	border-radius: 5px;
 	font-weight: 700;
+
+	padding-right: 38px;
+
+	appearance: none;
+
+	background-image: url("icons/expand_more-24px\ 4.svg");
+	background-size: 24px;
+	background-repeat: no-repeat;
+	background-position: calc(100% - 8px) center;
 }
 
-#sortby .listbox-option:not(:last-child)::after {
-	content: "";
-	width: 90%;
-	height: 1px;
-	background-color: #fff;
-	position: absolute;
-	bottom: 0;
-	left: 5%;
+select > option {
+	background-color: #901c1c;
+	color: #fff;
 }
-
-/* #sortby img {
-	position: absolute;
-	padding-right: 10px;
-	top: 50%;
-	right: 0;
-	z-index: 99;
-	transform: translateY(-50%);
-	cursor: pointer;
-} */

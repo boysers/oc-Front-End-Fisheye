@@ -1,22 +1,17 @@
-import { IMedia, IMediaMap, IPhotoMedia, IVideoMedia } from "../interfaces";
+import { createMediaCardFactory } from "../factories/mediaCardFactory";
+import { IMedia, IMediaMap } from "../interfaces";
 import { mediaCardTemplate } from "../templates/mediaCardTemplate";
-
-type MediaSectionFactoryProps = {
-	id: number;
-	title: string;
-	likes: number;
-	src: string;
-};
 
 type MediaSectionProps = {
 	media: IMedia[];
 	likedMediaMap: IMediaMap;
 	onClick?: (e: Event) => void;
+	onKeydown?: (e: KeyboardEvent) => void;
 };
 
 export const MediaSection = (
 	selector: string,
-	{ media, likedMediaMap, onClick }: MediaSectionProps = {
+	{ media, likedMediaMap, onClick, onKeydown }: MediaSectionProps = {
 		media: [],
 		likedMediaMap: {},
 	}
@@ -26,7 +21,7 @@ export const MediaSection = (
 	const updateMediaSection = () => {
 		const mediaTemplates = media.map((mediaItem) => {
 			return mediaCardTemplate(
-				createMediaSectionFactoryProps({
+				createMediaCardFactory({
 					...mediaItem,
 					likes: likedMediaMap[mediaItem.id].likes,
 				} as IMedia)
@@ -35,7 +30,24 @@ export const MediaSection = (
 
 		mediaSectionElement.innerHTML = mediaTemplates.join("");
 	};
+
 	updateMediaSection();
+
+	const handleLikesButton = (e: KeyboardEvent) => {
+		const isEnterSpaceKey = e.key == "Enter" || e.key == " ";
+
+		if (!(e.target instanceof HTMLElement)) return;
+
+		const isLikesButton = e.target.classList.contains("fa-heart");
+
+		if (isEnterSpaceKey && isLikesButton) {
+			e.target.click();
+		}
+
+		if (onKeydown instanceof Function) {
+			onKeydown(e);
+		}
+	};
 
 	if (onClick instanceof Function) {
 		mediaSectionElement.addEventListener("click", (e) => {
@@ -43,43 +55,7 @@ export const MediaSection = (
 		});
 	}
 
+	mediaSectionElement.addEventListener("keydown", handleLikesButton);
+
 	return [mediaSectionElement, { updateMediaSection }] as const;
 };
-
-function createMediaSectionFactoryProps(media: IMedia) {
-	if ("video" in media) {
-		return createVideoMediaFactoryProps(media);
-	}
-	return createPhotoMediaFactoryProps(media);
-}
-
-function createPhotoMediaFactoryProps({
-	image,
-	photographerId,
-	id,
-	likes,
-	title,
-}: IPhotoMedia): MediaSectionFactoryProps {
-	return {
-		title,
-		src: `media/${photographerId}/${image}`,
-		likes,
-		id,
-	};
-}
-
-function createVideoMediaFactoryProps({
-	video,
-	photographerId,
-	id,
-	likes,
-	title,
-}: IVideoMedia) {
-	return {
-		title,
-		src: `media/${photographerId}/${video}_poster.png`,
-		likes,
-		id,
-		video: `media/${photographerId}/${video}`,
-	};
-}

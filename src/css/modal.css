@@ -121,17 +121,21 @@ form textarea {
 	cursor: pointer;
 }
 
-#lightbox-modal {
+#lightboxModal {
+	overflow: hidden;
+} 
+
+#lightboxModal > div {
 	/* max-width: 1024px; */
 	max-width: 1280px;
 	margin: auto;
 }
 
-#lightbox-modal {
+#lightboxModal > div {
 	display: none;
 }
 
-#lightbox-modal.open {
+#lightboxModal.open > div {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -139,57 +143,99 @@ form textarea {
 	height: 100vh;
 }
 
-#lightbox-modal > img {
+#lightboxModal > div {
+	position: relative;
+}
+
+#lightboxModal .lightbox-controle {
 	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+#lightboxModal .lightbox-controle img {
 	cursor: pointer;
+	position: absolute;
 }
 
-#lightbox-modal > img:nth-child(1) {
-	top: 50px;
-	right: 20px;
+#lightboxModal .lightbox-controle img:nth-child(1) {
+	top: 5%;
+	right: -2%;
+	transform: scale(1.2);
 }
 
-#lightbox-modal > img:nth-child(2) {
-	left: 0;
+#lightboxModal .lightbox-controle img:nth-child(2) {
+	left: -3%;
+	top: 50%;
+	transform: translateY(-50%) scale(1.2);
 }
 
-#lightbox-modal > img:nth-child(3) {
-	right: 0;
+#lightboxModal .lightbox-controle img:nth-child(3) {
+	right: -3%;
+	top: 50%;
+	transform: translateY(-50%) scale(1.2);
 }
 
-#lightbox-modal article {
+#lightboxModal li {
 	display: none;
 }
 
-#lightbox-modal article p[aria-label="likes"] {
-	display: none;
-}
-
-#lightbox-modal .media_section {
+#lightbox-body {
 	display: flex;
 	width: 90%;
 	height: 90%;
 }
 
-#lightbox-modal .media_section article.open {
-	display: flex;
+#lightbox-body {
+	padding-left: 0;
+	margin: 0;
 }
 
-#lightbox-modal .media_section article {
-	width: 100%;
-}
-
-#lightbox-modal .media_section img {
-	aspect-ratio: unset;
-	height: 100%;
-	width: 100%;
-	object-fit: cover;
-}
-
-#lightbox-modal .media_section video {
+#lightbox-body li.open {
 	display: block;
 }
 
-#lightbox-modal .media_section .media-item:has(video) img {
+#lightbox-body li {
+	width: 100%;
+}
+
+#lightbox-body figure {
+	margin: 0;
+	font-weight: 400;
+	color: #901c1c;
+	font-size: 1.5em;
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - 10%);
+}
+
+#lightbox-body figcaption {
+	margin: 0;
+	font-weight: 400;
+	color: #901c1c;
+	font-size: 1.5em;
+	margin-top: 13px;
+}
+
+#lightbox-body img {
+	aspect-ratio: unset;
+	/* height: 100%;
+	width: 100%; */
+	flex: 1;
+	max-width: 100%;
+	max-height: 95%;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
+#lightbox-body video {
+	display: block;
+	object-fit: cover;
+	height: 100%;
+	width: 100%;
+	border-radius: 5px;
+}
+
+#lightbox-body .media-item:has(video) img {
 	display: none;
 }

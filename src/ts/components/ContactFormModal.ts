@@ -1,14 +1,14 @@
 import { formContactModalTemplate } from "../templates/formContactModalTemplate";
 import { ModalComponent } from "./ModalComponent";
 
-type ContactFormModalElementProps = {
+type ContactFormModalProps = {
 	title: string;
 	openModalBtnElement: HTMLElement;
 };
 
 export const ContactFormModal = (
 	selector: string,
-	{ title, openModalBtnElement }: ContactFormModalElementProps
+	{ title, openModalBtnElement }: ContactFormModalProps
 ) => {
 	const [contactFormModalElement, { onDisplayModal }] = ModalComponent(
 		selector,

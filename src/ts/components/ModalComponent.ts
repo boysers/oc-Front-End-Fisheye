@@ -3,15 +3,17 @@ import "../../css/modal.css";
 type ModalComponentProps = {
 	onClose?: (e: Event | KeyboardEvent) => void;
 	onOpen?: (e: Event) => void;
+	onKeydown?: (e: KeyboardEvent) => void;
 };
 
 export const ModalComponent = (
 	selector: string,
-	{ onClose, onOpen }: ModalComponentProps = {}
+	{ onClose, onOpen, onKeydown }: ModalComponentProps = {}
 ) => {
 	const modalElement = document.querySelector<HTMLElement>(selector);
 	const body = document.body;
 	const mainWrapper = body.children[0] as HTMLElement;
+	const isOnKeydown = onKeydown instanceof Function;
 
 	const onDisplayModal = () => {
 		if (modalElement.classList.contains("open")) {
@@ -25,12 +27,13 @@ export const ModalComponent = (
 		modalElement.classList.add("open");
 		modalElement.setAttribute("aria-hidden", "false");
 		mainWrapper.setAttribute("aria-hidden", "true");
+		modalElement.focus();
 	};
 
 	const onOpenModal = (e: Event) => {
 		if (modalElement.classList.contains("open")) return;
-		onDisplayModal();
 		e.preventDefault();
+		onDisplayModal();
 		if (onOpen instanceof Function) {
 			onOpen(e);
 		}
@@ -44,7 +47,6 @@ export const ModalComponent = (
 
 		const isTargetElement = isEvent && e.target instanceof HTMLElement;
 		const isEscapeKey = isKeyboardEvent && e.key == "Escape";
-		const isModalElement = isTargetElement && e.target === modalElement;
 
 		const isTabSpaceKey =
 			isKeyboardEvent && e.key != " " && e.key != "Enter";
@@ -53,7 +55,7 @@ export const ModalComponent = (
 			e.target.getAttribute("data-js") == "close-modal" &&
 			!isTabSpaceKey;
 
-		if (isEscapeKey || isModalElement || isCloseModalBtn) {
+		if (isEscapeKey || isCloseModalBtn) {
 			e.preventDefault();
 			onDisplayModal();
 			if (onClose instanceof Function) {
@@ -66,7 +68,10 @@ export const ModalComponent = (
 		onOpenModal(e);
 		onCloseModal(e);
 	});
-	modalElement.addEventListener("keydown", onCloseModal);
+	document.addEventListener("keydown", (e) => {
+		onCloseModal(e);
+		if (isOnKeydown) onKeydown(e);
+	});
 
 	return [modalElement, { onDisplayModal }] as const;
 };
