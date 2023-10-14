@@ -5,13 +5,13 @@ import { searchPhotographProfile } from "../utils/searchPhotographerProfile";
 import { handleLikesClick } from "../utils/handleLikesClick";
 import { calculateTotalLikes } from "../utils/calculateTotalLikes";
 import { getPhotographerIdFromURL } from "../utils/getPhotographerIdFormURL";
-import { Modal } from "../components/Modal/Modal";
-import { FormModal } from "../components/Modal/FormModal";
-import { Lightbox } from "../components/Modal/Lightbox";
-import { handleOpenLightbox } from "../utils/handleOpenLightbox";
-import { createLikesMediaMap } from "../utils/createLikesMediaMap";
-import { SortByComponent } from "../components/SortByComponent";
 import { sortMediaByOption } from "../utils/sortMediaByOption";
+import { createLikesMediaMap } from "../utils/createLikesMediaMap";
+import { ContactFormModal } from "../components/ContactFormModal";
+import { setDocumentTitle } from "../utils/setDocumentTitle";
+import { SortByComponent } from "../components/SortByComponent";
+import { LightboxModal } from "../components/LightboxModal";
+import { handleOpenLightbox } from "../utils/handleOpenLightbox";
 
 async function photographerPage() {
 	const photographerId = getPhotographerIdFromURL();
@@ -33,13 +33,22 @@ async function photographerPage() {
 	}
 
 	const { media, ...photograph } = profile;
+
 	const totalLikes = calculateTotalLikes(media);
 	const likedMediaMap = createLikesMediaMap(media);
+
+	setDocumentTitle(photograph.name);
+	sortMediaByOption(media, "popularity");
 
 	const [, { onIncrementLikes, onDecrementLikes, contactMeBtn }] =
 		PhotographHeader(".photograph-header", { photograph, totalLikes });
 
-	const [mediaSectionElement, { updateMediaSection }] = MediaSection(
+	ContactFormModal("#formModal", {
+		title: photograph.name,
+		openModalBtnElement: contactMeBtn,
+	});
+
+	const [mediaSectionElement,{ updateMediaSection }] = MediaSection(
 		".media_section",
 		{
 			media,
@@ -53,7 +62,6 @@ async function photographerPage() {
 				handleOpenLightbox(e, {
 					media,
 					onMediaItemDisplay,
-					toggleModalDisplay,
 				});
 			},
 		}
@@ -67,21 +75,10 @@ async function photographerPage() {
 		},
 	});
 
-	const [modalElement, { toggleModalDisplay }] = Modal("#modal");
-
-	const [, { onMediaItemDisplay, updateLightbox }] = Lightbox(
-		"#lightbox-modal",
-		{
-			mediaSectionElement,
-		}
+	const [, { updateLightbox, onMediaItemDisplay }] = LightboxModal(
+		"#lightboxModal",
+		{ media, mediaSectionElement }
 	);
-
-	FormModal("#contact-modal", {
-		title: profile.name,
-		toggleModalDisplay,
-		openBtnElement: contactMeBtn,
-		modalElement,
-	});
 }
 
 photographerPage();

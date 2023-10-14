@@ -25,23 +25,29 @@ export const handleLikesClick = (
 	const id = mediaItem.getAttribute("data-id");
 	if (!id) return;
 
+	const likesElement = likesBtn.previousElementSibling as HTMLElement;
+
+	likesBtn.setAttribute("aria-live", "polite");
+	likesBtn.setAttribute("aria-atomic", "true");
+
 	if (likedMediaMap[id].hasLiked) {
 		likedMediaMap[id].hasLiked = false;
 		likedMediaMap[id].likes -= 1;
-		updateLikesBtn(likesBtn, likedMediaMap[id].likes);
+		updateLikesBtn(likesElement, likedMediaMap[id].likes);
 		callLikesCallback(onDecrementLikes);
 		return;
 	}
 	likedMediaMap[id].hasLiked = true;
 	likedMediaMap[id].likes += 1;
-	updateLikesBtn(likesBtn, likedMediaMap[id].likes);
+	updateLikesBtn(likesElement, likedMediaMap[id].likes);
+
 	callLikesCallback(onIncrementLikes);
 };
 
 function findLikesBtn(element: HTMLElement): HTMLElement | null {
-	const isLikesBtn = element.getAttribute("aria-label") === "likes";
+	const isLikesBtn = element.classList.contains("fa-heart");
 	if (!isLikesBtn) return null;
-	return element.querySelector<HTMLElement>("span") ?? null;
+	return element;
 }
 
 function findMediaItem(element: HTMLElement) {

@@ -23,7 +23,7 @@ export const cardTemplate = ({
 			</a>
 			<p>${location}</p>
 			<p>${tagline}</p>
-			<p>${tjm}</p>
+			<p aria-label="Tarif journalier moyen">${tjm}</p>
 		</article>
 	`;
 };

@@ -14,25 +14,37 @@
 		></script>
 	</head>
 	<body>
-		<header>
-			<a href="../" aria-label="Fisheye Home page">
-				<img src="images/logo.png" class="logo" alt="fisheye logo" />
-			</a>
-		</header>
-		<main id="main">
-			<div class="photograph-header"></div>
-			<div id="sortby"></div>
-			<div class="media_section"></div>
-			<div
-				id="modal"
-				aria-hidden="true"
-				role="dialog"
-				aria-describedby="title-modal"
-			>
-				<div id="contact-modal"></div>
-				<div id="lightbox-modal"></div>
-			</div>
-		</main>
+		<div id="main-wrapper" aria-hidden="false">
+			<header>
+				<a href="../" aria-label="Fisheye Home page">
+					<img
+						src="images/logo.png"
+						class="logo"
+						alt="fisheye logo"
+					/>
+				</a>
+			</header>
+			<main id="main">
+				<div class="photograph-header"></div>
+				<div id="sortby"></div>
+				<div class="media_section"></div>
+			</main>
+		</div>
+		<div
+			class="modal"
+			id="formModal"
+			aria-hidden="true"
+			role="dialog"
+			aria-describedby="formModalTitle"
+			tabindex="0"
+		></div>
+		<div
+			class="modal"
+			id="lightboxModal"
+			aria-hidden="true"
+			role="dialog"
+			tabindex="0"
+		></div>
 		<script src="ts/main.ts" type="module"></script>
 		<script src="ts/pages/photographerPage.ts" type="module"></script>
 	</body>
