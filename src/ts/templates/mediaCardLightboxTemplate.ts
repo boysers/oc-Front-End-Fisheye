@@ -15,8 +15,11 @@ export const mediaCardLightboxTemplate = ({
 	return `
         <li data-id="${id}" class="media-item" aria-label="${title}">
             <figure>
-                <img src="${src}" alt="${title}"/>
-                ${video ? `<video src="${video}" controls aria-label="Contrôles vidéo"></video>` : ""}
+                ${
+					video
+						? `<video src="${video}" controls aria-label="Contrôles vidéo"></video>`
+						: `<img src="${src}" alt="${title}"/>`
+				}
                 <figcaption>${title}</figcaption>
             </figure>
         </li>

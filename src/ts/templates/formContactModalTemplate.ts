@@ -4,7 +4,7 @@ export function formContactModalTemplate({ title }: FormTemplateProps) {
 	return `
         <div>
             <header>
-            <h2 id="formModalTitle">Contactez-moi<br/>${title}</h2>
+            <h2>Contactez-moi<br/>${title}</h2>
             <img
                 src="icons/close.svg"
                 alt="Close contact form"
