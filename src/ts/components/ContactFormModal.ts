@@ -19,6 +19,7 @@ export const ContactFormModal = (
 		}
 	);
 	contactFormModalElement.innerHTML += formContactModalTemplate({ title });
+	contactFormModalElement.setAttribute("aria-describedby", "formModalTitle");
 
 	const formElement = contactFormModalElement.querySelector("form");
 
