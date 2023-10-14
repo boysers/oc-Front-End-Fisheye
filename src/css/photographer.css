@@ -133,7 +133,7 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	pointer-events: none;
-	background-color: hsla(0, 67%, 0%, 0.50);
+	background-color: hsla(0, 67%, 0%, 0.5);
 	width: 30%;
 	height: 30%;
 	display: flex;
@@ -197,7 +197,7 @@ select {
 
 	appearance: none;
 
-	background-image: url("icons/expand_more-select.svg");
+	background-image: url("/icons/expand_more-select.svg");
 	background-size: 24px;
 	background-repeat: no-repeat;
 	background-position: calc(100% - 8px) center;
