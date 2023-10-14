@@ -1,6 +1,11 @@
 import "../css/style.css";
 
 async function main() {
-	// document.body.style.backgroundColor = "rgb(22, 27, 43)";
+	const link = document.querySelector<HTMLLinkElement>("#home-page-link");
+
+	if (link) {
+		link.href = import.meta.env.BASE_URL;
+	}
 }
+
 main();

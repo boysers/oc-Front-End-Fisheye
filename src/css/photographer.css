@@ -197,7 +197,7 @@ select {
 
 	appearance: none;
 
-	background-image: url("icons/expand_more-24px\ 4.svg");
+	background-image: url("icons/expand_more-select.svg");
 	background-size: 24px;
 	background-repeat: no-repeat;
 	background-position: calc(100% - 8px) center;
