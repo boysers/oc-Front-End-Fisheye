@@ -123,7 +123,7 @@ form textarea {
 
 #lightboxModal {
 	overflow: hidden;
-} 
+}
 
 #lightboxModal > div {
 	/* max-width: 1024px; */
@@ -234,8 +234,4 @@ form textarea {
 	height: 100%;
 	width: 100%;
 	border-radius: 5px;
-}
-
-#lightbox-body .media-item:has(video) img {
-	display: none;
 }
