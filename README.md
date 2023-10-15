@@ -1,6 +1,10 @@
-# Base de code du projet P6 - Parcours Front-end
+# OC Fisheye
 
-## Démarrer le projet
+Démo du site [boysers.github.io/oc-Front-End-Fisheye](https://boysers.github.io/oc-Front-End-Fisheye/)
 
-Rien à installer ici, il suffit d'ouvrir le fichier `index.html`.
+## ⌨️ Commandes:
 
+```
+npm install
+npm run dev
+```
