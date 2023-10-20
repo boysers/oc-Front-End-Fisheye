@@ -35,9 +35,12 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 
 	const textAreaElement = formElement.querySelector("textarea#message");
 
+	// For textarea message
+	const [, { resetCounter }] = initCounter();
+
 	/**
 	 * Initializes character counter for message
-	 * @returns {void}
+	 * @returns {[HTMLElement, {resetCounter: () => void}]}
 	 */
 	function initCounter() {
 		let counter = 0;
@@ -51,6 +54,12 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 
 		/** @type {HTMLElement} */
 		const counterEl = counterMessage.querySelector("#counter");
+
+		const resetCounter = () => {
+			counter = 0;
+			counterEl.classList.add("error-counter");
+			counterEl.innerHTML = counter;
+		};
 
 		/**
 		 * Event handler for input events.
@@ -79,6 +88,8 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 		};
 
 		textAreaElement.addEventListener("input", handleCounterInput);
+
+		return [counterMessage, { resetCounter }];
 	}
 
 	/** Event handler for click events. */
@@ -129,6 +140,7 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 
 			onDisplayModal();
 			formElement.reset();
+			resetCounter();
 			openModalBtnElement.focus();
 		} catch (error) {
 			if (error instanceof UserEntityException) {
@@ -156,9 +168,6 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 			console.error(error);
 		}
 	};
-
-	// For textarea message
-	initCounter();
 
 	openModalBtnElement.addEventListener("click", handleOpenModalClick);
 	formElement.addEventListener("submit", handleFormSubmit);
