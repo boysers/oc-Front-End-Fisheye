@@ -1,3 +1,6 @@
+"use strict";
+
+/**  @returns {import('../types.js').HTMLTemplate} */
 export const sortbyTemplate = () => {
 	return `
         <label for="sort-select">Trier par</label>

@@ -1,14 +1,17 @@
+"use strict";
+
 /**
  * @typedef {Object} MediaSectionFactoryProps
  * @property {number} id
  * @property {string} title
  * @property {number} likes
  * @property {string} src
- * @property {string} [video]
+ * @property {string | undefined} video
  */
 
 /**
- * @param {IMedia} media
+ * Creates factory properties for a media card on the type media item.
+ * @param {import('../types.js').IMedia} media
  * @returns {MediaSectionFactoryProps}
  */
 export function createMediaCardFactory(media) {
@@ -19,8 +22,9 @@ export function createMediaCardFactory(media) {
 }
 
 /**
- * @param {IPhotoMedia} param0
- * @returns {MediaSectionFactoryProps}
+ * Creates factory properties for a photo media item.
+ * @param {import('../types.js').IPhotoMedia} param0
+ * @returns {Omit<'video', MediaSectionFactoryProps>}
  */
 function createPhotoMediaFactoryProps({
 	image,
@@ -38,7 +42,8 @@ function createPhotoMediaFactoryProps({
 }
 
 /**
- * @param {IVideoMedia} param0
+ * Creates factory properties for a video media item.
+ * @param {import("../types.js").IVideoMedia} param0
  * @returns {MediaSectionFactoryProps}
  */
 function createVideoMediaFactoryProps({

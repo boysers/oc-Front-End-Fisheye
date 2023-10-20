@@ -1,15 +1,18 @@
+"use strict";
+
 import "../../css/modal.css";
 
 /**
- * @typedef {Object} ModalComponentProps
+ * @typedef {Object} ModalComponentOptions
  * @property {(e: Event | KeyboardEvent) => void} [onClose]
  * @property {(e: Event) => void} [onOpen]
  * @property {(e: KeyboardEvent) => void} [onKeydown]
  */
 
 /**
+ * Creates and manages a Modal Component.
  * @param {string} selector
- * @param {ModalComponentProps} options
+ * @param {ModalComponentOptions} options
  * @returns {[HTMLElement, { onDisplayModal: () => void }]}
  */
 export const ModalComponent = (
@@ -17,10 +20,15 @@ export const ModalComponent = (
 	{ onClose, onOpen, onKeydown } = {}
 ) => {
 	const modalElement = document.querySelector(selector);
+
 	const body = document.body;
 	const mainWrapper = body.children[0];
-	const isOnKeydown = typeof onKeydown === "function";
 
+	const isOnClose = onClose instanceof Function;
+	const isOnOpen = onOpen instanceof Function;
+	const isOnKeydown = onKeydown instanceof Function;
+
+	/** Function to display or hide the modal. */
 	const onDisplayModal = () => {
 		if (modalElement.classList.contains("open")) {
 			body.classList.remove("open-modal");
@@ -29,6 +37,7 @@ export const ModalComponent = (
 			mainWrapper.setAttribute("aria-hidden", "false");
 			return;
 		}
+
 		body.classList.add("open-modal");
 		modalElement.classList.add("open");
 		modalElement.setAttribute("aria-hidden", "false");
@@ -36,15 +45,17 @@ export const ModalComponent = (
 		modalElement.focus();
 	};
 
+	// Function to open the modal.
 	const onOpenModal = (e) => {
 		if (modalElement.classList.contains("open")) return;
 		e.preventDefault();
 		onDisplayModal();
-		if (onOpen instanceof Function) {
+		if (isOnOpen) {
 			onOpen(e);
 		}
 	};
 
+	// Function to close the modal.
 	const onCloseModal = (e) => {
 		if (!modalElement.classList.contains("open")) return;
 
@@ -64,21 +75,32 @@ export const ModalComponent = (
 		if (isEscapeKey || isCloseModalBtn) {
 			e.preventDefault();
 			onDisplayModal();
-			if (onClose instanceof Function) {
+			if (isOnClose) {
 				onClose(e);
 			}
 		}
 	};
 
-	modalElement.addEventListener("mousedown", (e) => {
+	/**
+	 * Event handler for mousedown events.
+	 * @param {Event} e
+	 */
+	const handleMousedown = (e) => {
 		onOpenModal(e);
 		onCloseModal(e);
-	});
+	};
 
-	document.addEventListener("keydown", (e) => {
+	/**
+	 * Event handler for keydown events.
+	 * @param {KeyboardEvent} e
+	 */
+	const handleKeydown = (e) => {
 		onCloseModal(e);
 		if (isOnKeydown) onKeydown(e);
-	});
+	};
+
+	modalElement.addEventListener("mousedown", handleMousedown);
+	document.addEventListener("keydown", handleKeydown);
 
 	return [modalElement, { onDisplayModal }];
 };

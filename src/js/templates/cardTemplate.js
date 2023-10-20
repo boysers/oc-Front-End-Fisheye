@@ -1,5 +1,7 @@
+"use strict";
+
 /**
- * @typedef {Object} CardProps
+ * @typedef {Object} CardTemplateProps
  * @property {string} title
  * @property {string} href
  * @property {string} src
@@ -9,8 +11,8 @@
  */
 
 /**
- * @param {CardProps} props
- * @returns {string}
+ * @param {CardTemplateProps} props
+ * @returns {import('../types.js').HTMLTemplate}
  */
 export const cardTemplate = ({ href, location, src, title, tjm, tagline }) => {
 	return `

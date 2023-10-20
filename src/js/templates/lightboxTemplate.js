@@ -1,3 +1,6 @@
+"use strict";
+
+/** @returns {import('../types.js').HTMLTemplate} */
 export const lightboxTemplate = () => {
 	return `
         <div>

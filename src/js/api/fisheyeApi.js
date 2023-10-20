@@ -1,10 +1,9 @@
-/**
- * @typedef {Object} IFetchDataApi
- * @property {IPhotographer[]} fetchPhotographersJSON
- * @property {IMedia[]} media
- */
+"use strict";
 
-/**  @returns {Promise<IFetchDataApi | Error>} */
+/**
+ * Fetch photographer data from the JSON file.
+ * @returns {Promise<import('../types.js').IFetchDataApi | Error>}
+ * */
 export async function fetchPhotographersJSON() {
 	try {
 		const res = await fetch("data/photographers.json");

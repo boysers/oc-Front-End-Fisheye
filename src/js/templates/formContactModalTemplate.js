@@ -1,11 +1,13 @@
+"use strict";
+
 /**
- * @typedef {Object} FormTemplateProps
+ * @typedef {Object} FormContactModalTemplateProps
  * @property {string} title
  */
 
 /**
- * @param {FormTemplateProps} props
- * @returns {string}
+ * @param {FormContactModalTemplateProps} props
+ * @returns {import('../types.js').HTMLTemplate}
  */
 export function formContactModalTemplate({ title }) {
 	return `

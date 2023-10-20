@@ -1,17 +1,20 @@
+"use strict";
+
 import { createMediaCardFactory } from "../factories/mediaCardFactory";
 import { mediaCardTemplate } from "../templates/mediaCardTemplate";
 
 /**
- * @typedef {Object} MediaSectionProps
- * @property {IMedia[]} media
- * @property {IMediaMap} likedMediaMap
+ * @typedef {Object} MediaSectionOptions
+ * @property {Array<import('../types.js').IMedia>} media
+ * @property {import('../types.js').IMediaMap} likedMediaMap
  * @property {(e: Event) => void} [onClick]
  * @property {(e: KeyboardEvent) => void} [onKeydown]
  */
 
 /**
+ * Creates and manages a Media Section component.
  * @param {string} selector
- * @param {MediaSectionProps} options
+ * @param {MediaSectionOptions} options
  * @returns {[HTMLElement, { updateMediaSection: () => void }]}
  */
 export const MediaSection = (
@@ -23,21 +26,28 @@ export const MediaSection = (
 ) => {
 	const mediaSectionElement = document.querySelector(selector);
 
+	const isOnClick = onClick instanceof Function;
+	const isOnKeydown = onKeydown instanceof Function;
+
+	/** Function to add/update media items to the media section. */
 	const updateMediaSection = () => {
 		const mediaTemplates = media.map((mediaItem) => {
-			return mediaCardTemplate(
-				createMediaCardFactory({
-					...mediaItem,
-					...likedMediaMap[mediaItem.id],
-				})
-			);
+			const mediaItemProps = createMediaCardFactory(mediaItem);
+
+			return mediaCardTemplate({
+				...mediaItemProps,
+				...likedMediaMap[mediaItem.id],
+			});
 		});
 
 		mediaSectionElement.innerHTML = mediaTemplates.join("");
 	};
 
-	updateMediaSection();
-
+	/**
+	 * Function to handle likes button clicks using keyboard events.
+	 * @param {KeyboardEvent} e
+	 * @returns {void}
+	 */
 	const handleLikesButton = (e) => {
 		const isEnterSpaceKey = e.key == "Enter" || e.key == " ";
 
@@ -49,18 +59,19 @@ export const MediaSection = (
 			e.target.click();
 		}
 
-		if (onKeydown instanceof Function) {
+		if (isOnKeydown) {
 			onKeydown(e);
 		}
 	};
 
-	if (onClick instanceof Function) {
-		mediaSectionElement.addEventListener("click", (e) => {
-			onClick(e);
-		});
+	if (isOnClick) {
+		mediaSectionElement.addEventListener("click", onClick);
 	}
 
 	mediaSectionElement.addEventListener("keydown", handleLikesButton);
+
+	// Initial update of the media section.
+	updateMediaSection();
 
 	return [mediaSectionElement, { updateMediaSection }];
 };

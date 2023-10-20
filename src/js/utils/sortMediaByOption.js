@@ -1,5 +1,8 @@
+"use strict";
+
 /**
- * @param {IMedia[]} media
+ * Sort media on the selected sorting option.
+ * @param {Array<import('../types.js').IMedia>} media
  * @param {string} sortSelect
  * @throws {Error}
  */

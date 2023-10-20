@@ -1,14 +1,18 @@
+"use strict";
+
 import { photographHeaderTemplate } from "../templates/photographHeaderTemplate";
+import { isInstanceofHTMLElement } from "../utils/isInstanceofHTMLElement";
 
 /**
- * @typedef {Object} PhotographHeaderProps
- * @property {IPhotographer} photograph
+ * @typedef {Object} PhotographHeaderOptions
+ * @property {Array<import('../types.js').IPhotographer>} photograph
  * @property {number} [totalLikes=0]
  */
 
-/**
+/***
+ * Creates a Photograph Header.
  * @param {string} selector
- * @param {PhotographHeaderProps} options
+ * @param {PhotographHeaderOptions} options
  * @returns {[HTMLElement, { onIncrementLikes: () => void, onDecrementLikes: () => void, contactMeBtn: HTMLElement | null }]}
  */
 export const PhotographHeader = (
@@ -27,23 +31,24 @@ export const PhotographHeader = (
 		tjm: `${price}€/jour`,
 	});
 
-	const likesElement = photographHeaderElement.querySelector(
-		".photographer-info > :nth-child(1) > span"
+	const contactMeBtn = photographHeaderElement.querySelector(
+		'[data-js="open-modal"]'
 	);
+
+	const likesElement = photographHeaderElement.querySelector("#total-likes");
+	const isLikesElement = isInstanceofHTMLElement(likesElement);
+
+	// Callback function to increment likes.
 	const onIncrementLikes = () => {
-		if (likesElement instanceof HTMLElement) {
-			likesElement.innerText = (likes = likes + 1).toString();
-		}
-	};
-	const onDecrementLikes = () => {
-		if (likesElement instanceof HTMLElement) {
-			likesElement.innerText = (likes = likes - 1).toString();
-		}
+		if (!isLikesElement) return;
+		likesElement.innerText = (likes = likes + 1).toString();
 	};
 
-	const contactMeBtn = photographHeaderElement.querySelector(
-		"[data-js='open-modal'"
-	);
+	// Callback function to decrement likes.
+	const onDecrementLikes = () => {
+		if (!isLikesElement) return;
+		likesElement.innerText = (likes = likes - 1).toString();
+	};
 
 	return [
 		photographHeaderElement,

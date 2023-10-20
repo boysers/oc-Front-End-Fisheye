@@ -1,18 +1,22 @@
-import { formContactModalTemplate } from "../templates/formContactModalTemplate";
+"use strict";
+
 import { ModalComponent } from "./ModalComponent";
+import { formContactModalTemplate } from "../templates/formContactModalTemplate";
 
 /**
- * @typedef {Object} ContactFormModalProps
+ * @typedef {Object} ContactFormModalOptions
  * @property {string} title
  * @property {HTMLElement} openModalBtnElement
  */
 
 /**
+ * Creates and manages a Contact Form Modal component.
  * @param {string} selector
- * @param {ContactFormModalProps} options
+ * @param {ContactFormModalOptions} options
  * @returns {[HTMLElement]}
  */
 export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
+	// Create Modal Component.
 	const [contactFormModalElement, { onDisplayModal }] = ModalComponent(
 		selector,
 		{
@@ -26,16 +30,21 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 
 	const formElement = contactFormModalElement.querySelector("form");
 
-	openModalBtnElement.addEventListener("click", () => {
+	/** Event handler for click events. */
+	const handleOpenModalClick = () => {
 		onDisplayModal();
 
 		const closeBtn = contactFormModalElement.querySelector(
 			'[data-js="close-modal"]'
 		);
-		closeBtn.focus();
-	});
+		closeBtn?.focus();
+	};
 
-	formElement.addEventListener("submit", (e) => {
+	/**
+	 * Event handler for submit events.
+	 * @param {SubmitEvent} e
+	 */
+	const handleFormSubmit = (e) => {
 		e.preventDefault();
 
 		const formData = new FormData(e.currentTarget);
@@ -52,7 +61,10 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 		onDisplayModal();
 		formElement.reset();
 		openModalBtnElement.focus();
-	});
+	};
+
+	openModalBtnElement.addEventListener("click", handleOpenModalClick);
+	formElement.addEventListener("submit", handleFormSubmit);
 
 	return [formElement];
 };

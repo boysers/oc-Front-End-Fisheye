@@ -1,34 +1,40 @@
+"use strict";
+
 import { sortbyTemplate } from "../templates/sortbyTemplate";
 
 /**
- * @typedef {Object} SortByComponentProps
+ * @typedef {Object} SortByComponentOptions
  * @property {(e: Event, selectedSort: string) => void} [onChange]
  */
 
 /**
+ * Creates a SortBy component.
  * @param {string} selector
- * @param {SortByComponentProps} options
+ * @param {SortByComponentOptions} options
  * @returns {[HTMLElement]}
  */
-export const SortByComponent = (
-    selector,
-    { onChange } = {}
-) => {
-    const sortbyElement = document.querySelector(selector);
-    sortbyElement.innerHTML += sortbyTemplate();
+export const SortByComponent = (selector, { onChange } = {}) => {
+	const sortbyElement = document.querySelector(selector);
 
-    const selectElement = sortbyElement.querySelector("#sort-select");
-    const isOnChangeFunction = typeof onChange === "function";
+	// Add the HTML template for the sort by component.
+	sortbyElement.innerHTML += sortbyTemplate();
+	const selectElement = sortbyElement.querySelector("#sort-select");
 
-    const handleSelectChange = (e) => {
-        const isSelectElement = e.target instanceof HTMLSelectElement;
+	const isOnChangeFunction = typeof onChange === "function";
 
-        if (isSelectElement && isOnChangeFunction) {
-            onChange(e, e.target.value);
-        }
-    };
+	/**
+	 * Handles the change event of the select element.
+	 * @param {Event} e
+	 */
+	const handleSelectChange = (e) => {
+		const isSelectElement = e.target instanceof HTMLSelectElement;
 
-    selectElement.addEventListener("change", handleSelectChange);
+		if (isSelectElement && isOnChangeFunction) {
+			onChange(e, e.target.value);
+		}
+	};
 
-    return [sortbyElement];
+	selectElement.addEventListener("change", handleSelectChange);
+
+	return [sortbyElement];
 };

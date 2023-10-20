@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * @typedef {Object} IFetchDataApi
  * @property {IPhotographer[]} photographers
@@ -47,10 +49,12 @@
  * @property {number} price
  */
 
-/**
- * @typedef {IPhotographer & { media: IMedia[] }} IPhotographProfile
- */
+/** @typedef {IPhotoMedia | IVideoMedia} IMedia */
 
-/**
- * @typedef {Record<string, { likes: number; hasLiked: boolean }>} IMediaMap
- */
+/** @typedef {IPhotographer & { media: IMedia[] }} IPhotographProfile */
+
+/** @typedef {Record<string, { likes: number; hasLiked: boolean }>} IMediaMap */
+
+/** @typedef {string} HTMLTemplate */
+
+export default {};

@@ -1,13 +1,16 @@
+"use strict";
+
 import { cardTemplate } from "../templates/cardTemplate";
 
 /**
- * @typedef {Object} PhotographerSectionProps
- * @property {IPhotographer[]} photographers
+ * @typedef {Object} PhotographerSectionOptions
+ * @property {Array<import('../types.js').IPhotographer>} photographers
  */
 
 /**
+ * Creates a Photographer Section.
  * @param {string} selector
- * @param {PhotographerSectionProps} options
+ * @param {PhotographerSectionOptions} options
  * @returns {[HTMLElement]}
  */
 export const PhotographerSection = (selector, { photographers }) => {

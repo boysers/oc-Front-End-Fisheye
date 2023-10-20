@@ -1,6 +1,9 @@
+"use strict";
+
 /**
- * @param {IMedia[]} media - Le tableau de médias.
- * @returns {IMediaMap} La carte des likes pour les médias.
+ * Creates a map of media items with like information.
+ * @param {Array<import('../types.js').IMedia>} media
+ * @returns {import('../types.js').IMediaMap}
  */
 export function createLikesMediaMap(media) {
 	return Object.fromEntries(

@@ -1,9 +1,12 @@
+"use strict";
+
 /**
- * @param {IFetchDataApi} data
- * @param {number} id
- * @returns {IPhotographProfile | Error}
+ * Findes a photographer's profile in the data with its ID.
+ * @param {IFetchDataApi} data - data api (media)
+ * @param {number} id - Photographer ID
+ * @returns {import('../types.js').IPhotographProfile | Error}
  */
-export function searchPhotographProfile(data, id) {
+export function searchPhotographProfileByID(data, id) {
 	const { photographers, media } = data;
 
 	const photographerProfile = photographers.find(

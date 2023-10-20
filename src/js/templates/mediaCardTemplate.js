@@ -1,19 +1,30 @@
+"use strict";
+
 /**
- * @typedef {Object} MediaCardProps
+ * @typedef {Object} MediaCardTemplateProps
+ * @property {number} id
  * @property {string} title
  * @property {string} src
  * @property {number} likes
- * @property {number} id
- * @property {string} [video]
+ * @property {boolean} hasLiked
+ * @property {string | undefined} video
  */
 
 /**
- * @param {MediaCardProps} props
- * @returns {string}
+ * @param {MediaCardTemplateProps} props
+ * @returns {import('../types.js').HTMLTemplate}
  */
-export const mediaCardTemplate = ({ title, src, likes, id, video, hasLiked }) => {
+export const mediaCardTemplate = ({
+	title,
+	src,
+	likes,
+	id,
+	video,
+	hasLiked,
+}) => {
 	const img = `<img src="${src}" alt="${title} image" tabindex="0" role="button"/>`;
-	const type = hasLiked ? "solid" : "regular"
+	const type = hasLiked ? "solid" : "regular";
+
 	return `
         <article data-id="${id}" class="media-item">
             

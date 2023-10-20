@@ -1,10 +1,6 @@
-import { isInstanceofHTMLElement } from "./isInstanceOfHTMLElement";
+"use strict"
 
-/**
- * @typedef {Object} IMediaMap
- * @property {number} likes
- * @property {boolean} hasLiked
- */
+import { isInstanceofHTMLElement } from "./isInstanceOfHTMLElement";
 
 /**
  * @typedef {Object} CallbackLikes
@@ -12,9 +8,10 @@ import { isInstanceofHTMLElement } from "./isInstanceOfHTMLElement";
  * @property {() => void} onDecrementLikes
  */
 
-/** @typedef {CallbackLikes & { likedMediaMap: IMediaMap }} handleLikesProps */
+/** @typedef {CallbackLikes & { likedMediaMap: import('../types.js').IMediaMap }} handleLikesProps */
 
 /**
+ * Handles the click event for managing likes on media items.
  * @param {Event} e
  * @param {handleLikesProps} param1
  */
@@ -60,6 +57,7 @@ export const handleLikesClick = (
 };
 
 /**
+ * Finds the likes button in the element parent.
  * @param {HTMLElement} element
  * @returns {HTMLElement | null}
  */
@@ -70,8 +68,9 @@ function findLikesBtn(element) {
 }
 
 /**
- * @param {HTMLElement} element
- * @returns {HTMLElement | null}
+ * Finds the parent element "media-item" of the child element
+ * @param {HTMLElement} element - child media item
+ * @returns {HTMLElement | null} - Media Item Element
  */
 function findMediaItem(element) {
 	let currentElement = element;
@@ -82,6 +81,7 @@ function findMediaItem(element) {
 }
 
 /**
+ * Updates the likes count.
  * @param {HTMLElement} element
  * @param {number} likes
  */
@@ -91,6 +91,7 @@ function updateLikesElement(element, likes) {
 }
 
 /**
+ * Updates visual style of the likes button.
  * @param {HTMLElement} element
  * @param {number} likes
  */
@@ -107,7 +108,10 @@ function updateLikesBtn(element, hasLiked) {
 	element.classList.remove("fa-solid");
 }
 
-/** @param {() => void} callback */
+/**
+ * Calls Callback function, verif if the type valid function.
+ * @param {() => void} callback
+ * */
 function callLikesCallback(callback) {
 	if (callback instanceof Function) {
 		callback();
