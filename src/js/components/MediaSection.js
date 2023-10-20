@@ -28,7 +28,7 @@ export const MediaSection = (
 			return mediaCardTemplate(
 				createMediaCardFactory({
 					...mediaItem,
-					likes: likedMediaMap[mediaItem.id].likes,
+					...likedMediaMap[mediaItem.id],
 				})
 			);
 		});

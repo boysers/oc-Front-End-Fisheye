@@ -1,3 +1,5 @@
+import { isInstanceofHTMLElement } from "./isInstanceOfHTMLElement";
+
 /**
  * @typedef {Object} IMediaMap
  * @property {number} likes
@@ -20,7 +22,7 @@ export const handleLikesClick = (
 	e,
 	{ onIncrementLikes, onDecrementLikes, likedMediaMap }
 ) => {
-	if (!(e.target instanceof HTMLElement)) return;
+	if (!isInstanceofHTMLElement(e.target)) return;
 	const element = e.target;
 
 	const likesBtn = findLikesBtn(element);
@@ -40,14 +42,19 @@ export const handleLikesClick = (
 	if (likedMediaMap[id].hasLiked) {
 		likedMediaMap[id].hasLiked = false;
 		likedMediaMap[id].likes -= 1;
-		updateLikesBtn(likesElement, likedMediaMap[id].likes);
+
+		updateLikesElement(likesElement, likedMediaMap[id].likes);
+		updateLikesBtn(likesBtn, likedMediaMap[id].hasLiked);
+
 		callLikesCallback(onDecrementLikes);
 		return;
 	}
 
 	likedMediaMap[id].hasLiked = true;
 	likedMediaMap[id].likes += 1;
-	updateLikesBtn(likesElement, likedMediaMap[id].likes);
+
+	updateLikesElement(likesElement, likedMediaMap[id].likes);
+	updateLikesBtn(likesBtn, likedMediaMap[id].hasLiked);
 
 	callLikesCallback(onIncrementLikes);
 };
@@ -78,10 +85,26 @@ function findMediaItem(element) {
  * @param {HTMLElement} element
  * @param {number} likes
  */
-function updateLikesBtn(element, likes) {
-	if (element) {
-		element.innerText = likes.toString();
+function updateLikesElement(element, likes) {
+	if (!isInstanceofHTMLElement(element)) return;
+	element.innerText = likes.toString();
+}
+
+/**
+ * @param {HTMLElement} element
+ * @param {number} likes
+ */
+function updateLikesBtn(element, hasLiked) {
+	if (!isInstanceofHTMLElement(element)) return;
+
+	if (hasLiked) {
+		element.classList.remove("fa-regular");
+		element.classList.add("fa-solid");
+		return;
 	}
+
+	element.classList.add("fa-regular");
+	element.classList.remove("fa-solid");
 }
 
 /** @param {() => void} callback */
