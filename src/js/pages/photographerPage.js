@@ -74,6 +74,15 @@ async function photographerPage() {
 					onMediaItemDisplay,
 				});
 			},
+			onKeydown(e) {
+				const isEnterKey = e.key === "Enter";
+				if (!isEnterKey) return;
+
+				handleOpenLightbox(e, {
+					media,
+					onMediaItemDisplay,
+				});
+			},
 		}
 	);
 
