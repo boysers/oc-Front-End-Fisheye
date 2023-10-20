@@ -90,15 +90,6 @@ form input {
 	font-size: 1.5em;
 }
 
-form .field-error {
-	display: none;
-	color: #e54858;
-}
-
-form .field-error.open {
-	display: block;
-}
-
 form textarea {
 	resize: none;
 	width: 100%;
@@ -106,6 +97,44 @@ form textarea {
 	border-radius: 5px;
 	font-size: 24px;
 	font-family: "DM Sans", sans-serif;
+}
+
+form .error {
+	display: none;
+	color: #230101;
+	font-size: 18px;
+	margin: 0;
+	text-align: right;
+}
+
+form .error.open {
+	display: block;
+}
+
+form .field.field-error {
+	background-color: #c10000ab;
+	color: #fff;
+}
+
+form .info-message {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 8px;
+}
+
+form #compteur-message {
+	font-size: 18px;
+	margin: 0;
+
+	background-color: #ffffff84;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+form #compteur-message #counter.error-counter {
+	color: #dd0f0f;
 }
 
 .contact_button {
