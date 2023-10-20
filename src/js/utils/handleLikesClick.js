@@ -1,6 +1,6 @@
-"use strict"
+"use strict";
 
-import { isInstanceofHTMLElement } from "./isInstanceOfHTMLElement";
+import { isInstanceofHTMLElement } from "./isInstanceOfHTMLElement.js";
 
 /**
  * @typedef {Object} CallbackLikes
