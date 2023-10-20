@@ -73,7 +73,7 @@ export const ModalComponent = (
 			!isTabSpaceKey;
 
 		if (isEscapeKey || isCloseModalBtn) {
-			e.preventDefault();
+			// e.preventDefault();
 			onDisplayModal();
 			if (isOnClose) {
 				onClose(e);
@@ -100,7 +100,7 @@ export const ModalComponent = (
 	};
 
 	modalElement.addEventListener("mousedown", handleMousedown);
-	document.addEventListener("keydown", handleKeydown);
+	modalElement.addEventListener("keydown", handleKeydown);
 
 	return [modalElement, { onDisplayModal }];
 };

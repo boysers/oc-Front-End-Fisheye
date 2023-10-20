@@ -31,7 +31,9 @@ export function formContactModalTemplate({ title }) {
                         name="firstname"
                         required
                         minlength="2"
+                        class="field"
                     />
+                    <p class="error" data-error="firstname"></p>
                 </div>
                 <div>
                     <label for="lastname">Nom</label>
@@ -41,7 +43,9 @@ export function formContactModalTemplate({ title }) {
                         name="lastname"
                         required
                         minlength="2"
+                        class="field"
                     />
+                    <p class="error" data-error="lastname"></p>
                 </div>
                 <div>
                     <label for="email">Email</label>
@@ -50,7 +54,9 @@ export function formContactModalTemplate({ title }) {
                         id="email"
                         name="email"
                         required
+                        class="field"
                     />
+                    <p class="error" data-error="email"></p>
                 </div>
                 <div>
                     <label for="message">Votre message</label>
@@ -58,10 +64,13 @@ export function formContactModalTemplate({ title }) {
                         id="message"
                         name="message"
                         rows="6"
-                        spellcheck
                         required
-                        minlength="20"
+                        class="field"
                     ></textarea>
+                    <div class="info-message">
+                        <p id="compteur-message"></p>
+                        <p class="error" data-error="message"></p>
+                    </div>
                 </div>
                 <button type="submit" class="contact_button">Envoyer</button>
             </form>

@@ -2,6 +2,9 @@
 
 import { ModalComponent } from "./ModalComponent";
 import { formContactModalTemplate } from "../templates/formContactModalTemplate";
+import { UserEntityException } from "../utils/UserEntityException";
+import { User } from "../entities/User";
+import { Validator } from "../utils/Validator";
 
 /**
  * @typedef {Object} ContactFormModalOptions
@@ -30,6 +33,54 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 
 	const formElement = contactFormModalElement.querySelector("form");
 
+	const textAreaElement = formElement.querySelector("textarea#message");
+
+	/**
+	 * Initializes character counter for message
+	 * @returns {void}
+	 */
+	function initCounter() {
+		let counter = 0;
+
+		const counterMessage = formElement.querySelector("#compteur-message");
+		const isCounterMessage = counterMessage instanceof HTMLElement;
+
+		if (!isCounterMessage) return;
+
+		counterMessage.innerHTML = `<span id="counter" class="error-counter">0</span>/200`;
+
+		/** @type {HTMLElement} */
+		const counterEl = counterMessage.querySelector("#counter");
+
+		/**
+		 * Event handler for input events.
+		 * @param {Event} e
+		 */
+		const handleCounterInput = (e) => {
+			const isTextAreaElement = e.target instanceof HTMLTextAreaElement;
+			if (!isTextAreaElement) return;
+
+			/** @type {HTMLTextAreaElement} */
+			const target = e.target;
+			const message = target.value;
+
+			counter = message.length;
+
+			counterEl.innerHTML = counter;
+
+			const isValidMessage = Validator.isMessage(message, 50, 200);
+
+			if (isValidMessage) {
+				counterEl.classList.remove("error-counter");
+				return;
+			}
+
+			counterEl.classList.add("error-counter");
+		};
+
+		textAreaElement.addEventListener("input", handleCounterInput);
+	}
+
 	/** Event handler for click events. */
 	const handleOpenModalClick = () => {
 		onDisplayModal();
@@ -48,20 +99,66 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 		e.preventDefault();
 
 		const formData = new FormData(e.currentTarget);
+		const inputs = formElement.elements;
 
-		const firstname = formData.get("firstname");
-		const lastname = formData.get("lastname");
-		const email = formData.get("email");
-		const message = formData.get("message");
+		const firstname = String(formData.get("firstname"));
+		const lastname = String(formData.get("lastname"));
+		const email = String(formData.get("email"));
+		const message = String(formData.get("message"));
 
-		const data = { firstname, lastname, email, message };
+		const userData = { firstname, lastname, email, message };
 
-		console.log(data);
+		const errorElements = formElement.querySelectorAll(".error");
+		// Reset error fields
+		errorElements.forEach((errorEl) => {
+			errorEl.innerHTML = "";
+			errorEl.classList.remove("open");
+		});
 
-		onDisplayModal();
-		formElement.reset();
-		openModalBtnElement.focus();
+		// Reset error fields
+		const fieldElements =
+			formElement.querySelectorAll(".field.field-error");
+		fieldElements.forEach((fieldEl) => {
+			fieldEl.classList.remove("field-error");
+		});
+
+		try {
+			const user = User.create(userData);
+
+			console.table(user.snapshot);
+
+			onDisplayModal();
+			formElement.reset();
+			openModalBtnElement.focus();
+		} catch (error) {
+			if (error instanceof UserEntityException) {
+				Object.entries(error.invalidProps).forEach(([key, value]) => {
+					/** @type {HTMLElement | null} */
+					const errorElement = formElement.querySelector(
+						`[data-error="${key}"]`
+					);
+
+					if (!errorElement) return;
+
+					errorElement.innerText = value;
+					errorElement.classList.add("open");
+
+					/** @type {HTMLInputElement | null} */
+					const input = inputs[key];
+
+					if (!input) return;
+
+					input.classList.add("field-error");
+				});
+				return;
+			}
+
+			console.error(error);
+		}
 	};
+
+	// For textarea message
+	initCounter();
 
 	openModalBtnElement.addEventListener("click", handleOpenModalClick);
 	formElement.addEventListener("submit", handleFormSubmit);

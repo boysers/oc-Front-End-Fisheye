@@ -57,4 +57,12 @@
 
 /** @typedef {string} HTMLTemplate */
 
+/**
+ * @typedef {Object} IUser
+ * @property {string} firstname
+ * @property {string} lastname
+ * @property {string} email
+ * @property {string} message
+ */
+
 export default {};

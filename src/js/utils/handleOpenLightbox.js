@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 /**
  * @typedef {Object} Props
@@ -20,6 +20,8 @@ export function handleOpenLightbox(e, { onMediaItemDisplay, media }) {
 	while (currentElement && !currentElement.classList.contains("media-item")) {
 		currentElement = currentElement.parentElement;
 	}
+
+	if (!currentElement) return;
 
 	const mediaItem = media.find(
 		(item) =>
