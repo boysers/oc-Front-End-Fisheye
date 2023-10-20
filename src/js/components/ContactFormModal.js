@@ -131,6 +131,7 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 			formElement.querySelectorAll(".field.field-error");
 		fieldElements.forEach((fieldEl) => {
 			fieldEl.classList.remove("field-error");
+			fieldEl.setAttribute("aria-invalid", "false");
 		});
 
 		try {
@@ -161,6 +162,7 @@ export const ContactFormModal = (selector, { title, openModalBtnElement }) => {
 					if (!input) return;
 
 					input.classList.add("field-error");
+					input.setAttribute("aria-invalid", "true");
 				});
 				return;
 			}

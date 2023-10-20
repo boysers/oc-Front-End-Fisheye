@@ -137,6 +137,10 @@ form #compteur-message #counter.error-counter {
 	color: #dd0f0f;
 }
 
+form #counter {
+	color: #0c8f20;
+}
+
 .contact_button {
 	font-size: 20px;
 	font-weight: bold;

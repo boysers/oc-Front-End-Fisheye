@@ -16,10 +16,11 @@ export function formContactModalTemplate({ title }) {
                 <h2 id="formModalTitle">Contactez-moi<br/>${title}</h2>
                 <img
                     src="icons/close.svg"
-                    alt="Fermer le formulaire de contact"
+                    alt=""
                     data-js="close-modal"
                     tabindex="0"
                     role="button"
+                    aria-label="Close Contact form"
                 />
             </header>
             <form>
@@ -32,8 +33,10 @@ export function formContactModalTemplate({ title }) {
                         required
                         minlength="2"
                         class="field"
+                        aria-invalid="false"
+                        aria-errormessage="err-firstname"
                     />
-                    <p class="error" data-error="firstname"></p>
+                    <p id="err-firstname" class="error" aria-live="polite" aria-atomique="true" data-error="firstname"></p>
                 </div>
                 <div>
                     <label for="lastname">Nom</label>
@@ -44,8 +47,10 @@ export function formContactModalTemplate({ title }) {
                         required
                         minlength="2"
                         class="field"
+                        aria-invalid="false"
+                        aria-errormessage="err-lastname"
                     />
-                    <p class="error" data-error="lastname"></p>
+                    <p id="err-lastname" class="error" aria-live="polite" aria-atomique="true" data-error="lastname"></p>
                 </div>
                 <div>
                     <label for="email">Email</label>
@@ -55,8 +60,10 @@ export function formContactModalTemplate({ title }) {
                         name="email"
                         required
                         class="field"
+                        aria-invalid="false"
+                        aria-errormessage="err-email"
                     />
-                    <p class="error" data-error="email"></p>
+                    <p id="err-email" class="error" aria-live="polite" aria-atomique="true" data-error="email"></p>
                 </div>
                 <div>
                     <label for="message">Votre message</label>
@@ -66,13 +73,15 @@ export function formContactModalTemplate({ title }) {
                         rows="6"
                         required
                         class="field"
+                        aria-invalid="false"
+                        aria-errormessage="err-message"
                     ></textarea>
                     <div class="info-message">
                         <p id="compteur-message"></p>
-                        <p class="error" data-error="message"></p>
+                        <p id="err-message" class="error" aria-live="polite" aria-atomique="true" data-error="message"></p>
                     </div>
                 </div>
-                <button type="submit" class="contact_button">Envoyer</button>
+                <button type="submit" class="contact_button" aria-label="Send">Envoyer</button>
             </form>
         </div>
     `;

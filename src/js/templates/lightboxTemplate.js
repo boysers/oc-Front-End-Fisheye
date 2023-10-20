@@ -7,27 +7,27 @@ export const lightboxTemplate = () => {
             <div role="group" aria-label="carrousel controls" class="lightbox-controle">
                 <img
                     src="icons/close-lightbox.svg"
-                    alt="Close dialog"
+                    alt=""
                     data-js="close-modal"
                     tabindex="0"
                     role="button"
-                    aria-label="Fermer la fenêtre modale"
+                    aria-label="Close dialog"
                 />
                 <img
                     src="icons/expand_more-left.svg"
-                    alt="Previous image"
+                    alt=""
                     tabindex="0"
-                    role="button"
+                    role="link"
                     class="arrow left"
-                    aria-label="Image précédente"
+                    aria-label="Previous Image"
                 />
                 <img
                     src="icons/expand_more-right.svg"
-                    alt="Next image"
+                    alt=""
                     tabindex="0"
-                    role="button"
+                    role="link"
                     class="arrow right"
-                    aria-label="Image suivante"
+                    aria-label="Next image"
                 />
             </div>
         </div>

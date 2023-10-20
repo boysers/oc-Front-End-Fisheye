@@ -18,7 +18,7 @@ export const cardTemplate = ({ href, location, src, title, tjm, tagline }) => {
 	return `
 		<article>
 			<a href="${href}" aria-label="${title}">
-				<img src="${src}" alt="${title}" />
+				<img src="${src}" alt="" />
 				<h2>${title}</h2>
 			</a>
 			<p>${location}</p>

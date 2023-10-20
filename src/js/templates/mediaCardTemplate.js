@@ -22,12 +22,11 @@ export const mediaCardTemplate = ({
 	video,
 	hasLiked,
 }) => {
-	const img = `<img src="${src}" alt="${title} image" tabindex="0" role="button"/>`;
+	const img = `<img src="${src}" aria-label="${title}, closeup view" alt="" tabindex="0" role="button"/>`;
 	const type = hasLiked ? "solid" : "regular";
 
 	return `
         <article data-id="${id}" class="media-item">
-            
 			${
 				video
 					? `
@@ -41,7 +40,7 @@ export const mediaCardTemplate = ({
                 <h2>${title}</h2>
                 <p class="likes-btn">
                     <span id="likes${id}" aria-live="polite" aria-atomic="true">${likes}</span>
-                    <i aria-label="${likes} likes" tabindex="0" role="button" class="fa-${type} fa-heart" style="color: #901c1c"></i>
+                    <i aria-label="likes" tabindex="0" role="button" class="fa-${type} fa-heart" style="color: #901c1c"></i>
                 </p>
             </div>
         </article>
